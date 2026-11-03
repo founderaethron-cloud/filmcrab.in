@@ -1,0 +1,1028 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- PREVIEW BUILD: remove the next line when the site is ready to launch -->
+<meta name="robots" content="noindex,nofollow">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>FilmCrab</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"Organization","@id":"#filmcrab","name":"FilmCrab","description":"FilmCrab builds AI agents and custom software tools for film and entertainment production, starting with Malayalam cinema in Kerala, India. Every agent drafts work and a named human approves it.","parentOrganization":{"@type":"Organization","name":"Aethron Technologies Private Limited"},"areaServed":"Kerala, India","knowsAbout":["film production workflow","script breakdown","production scheduling","call sheets","film budgeting","post-production tracking","film marketing","screenplay development"]},
+{"@type":"Service","name":"AI Agents for Film and Entertainment","provider":{"@id":"#filmcrab"},"serviceType":"AI agents with human approval for creative development, script breakdown, scheduling, budgeting, production reporting, post-production and film marketing"},
+{"@type":"Service","name":"Production Services","provider":{"@id":"#filmcrab"},"serviceType":"Script doctor, production unit support and other hands-on production support assisted by AI agents"},
+{"@type":"Service","name":"Producer Network","provider":{"@id":"#filmcrab"},"serviceType":"Talent shortlisting and introductions between producers and investors"},
+{"@type":"Service","name":"Custom Film Software and Integrations","provider":{"@id":"#filmcrab"},"serviceType":"Bespoke production tools, pipeline integrations and studio software"}
+]}
+</script>
+<style>
+:root{
+  --bg:#0E0D0C; --surface:#171513; --surface2:#201D1A; --line:#332E29;
+  --fg:#F2EDE6; --muted:#A89F93; --accent:#F0583A; --accent-ink:#140A07;
+  --ok:#74C493; --warn:#E6B84A; --ph:#E6B84A; --glow:rgba(240,88,58,.14);
+  color-scheme:dark;
+}
+@media (prefers-color-scheme:light){
+  :root:not([data-theme="dark"]){
+    --bg:#F7F3EC; --surface:#FFFFFF; --surface2:#EFE9DF; --line:#DDD3C3;
+    --fg:#1B1815; --muted:#665E53; --accent:#C2381C; --accent-ink:#FFFFFF;
+    --ok:#1F7A46; --warn:#8A5F00; --ph:#8A5F00; --glow:rgba(194,56,28,.10);
+    color-scheme:light;
+  }
+}
+:root[data-theme="light"]{
+  --bg:#F7F3EC; --surface:#FFFFFF; --surface2:#EFE9DF; --line:#DDD3C3;
+  --fg:#1B1815; --muted:#665E53; --accent:#C2381C; --accent-ink:#FFFFFF;
+  --ok:#1F7A46; --warn:#8A5F00; --ph:#8A5F00; --glow:rgba(194,56,28,.10);
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-padding-top:128px}
+body{background:var(--bg);color:var(--fg);font:400 16px/1.6 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:40}
+h1,h2,h3{font-family:"Barlow Condensed","Arial Narrow",Impact,sans-serif;font-weight:700;line-height:1.04;margin:0;text-wrap:balance;letter-spacing:.005em}
+h1{font-size:clamp(2.6rem,6vw,4.4rem)}
+h2{font-size:clamp(2rem,4vw,3rem)}
+h3{font-size:1.5rem;line-height:1.1}
+p{margin:0}
+a{color:inherit}
+.w{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.mono,.eyebrow,.chip{font-family:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace}
+.eyebrow{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.lead{font-size:1.15rem;color:var(--muted);max-width:62ch}
+.muted{color:var(--muted)}
+section.band{padding-block:clamp(44px,7vw,88px)}
+.band.alt{background:var(--surface);border-block:1px solid var(--line)}
+.head{display:grid;gap:14px;margin-bottom:34px;max-width:780px}
+
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--bg);border-bottom:1px solid var(--line)}
+.nav{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;min-height:64px}
+.logo{display:inline-flex;align-items:center;gap:10px;min-height:44px;text-decoration:none;font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:1.6rem;letter-spacing:.08em;margin-right:auto}
+.logo svg{width:30px;height:30px}
+.links{display:flex;gap:2px}
+.links a{display:inline-flex;align-items:center;min-height:44px;padding:0 12px;text-decoration:none;color:var(--muted);font-size:.95rem;font-weight:500;border-radius:6px;white-space:nowrap}
+.links a:hover{color:var(--fg)}
+.links a[aria-current="page"]{color:var(--fg);box-shadow:inset 0 -2px 0 var(--accent);border-radius:0}
+@media (max-width:900px){.links{order:3;width:100%;overflow-x:auto;padding-bottom:4px}}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 22px;border-radius:6px;border:1.5px solid var(--accent);background:var(--accent);color:var(--accent-ink);font:600 1rem "IBM Plex Sans",sans-serif;text-decoration:none;cursor:pointer}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:transparent;color:var(--fg);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--fg);filter:none}
+.btn.sm{min-height:44px;padding:0 16px;font-size:.92rem}
+.btn:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.row{display:flex;flex-wrap:wrap;gap:12px}
+
+.hero{padding-block:clamp(40px,7vw,84px) clamp(32px,5vw,56px);background:radial-gradient(900px 420px at 85% 0,var(--glow),transparent 70%)}
+.hero-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:clamp(28px,4vw,56px);align-items:center}
+.hero-copy{display:grid;gap:22px;min-width:0}
+@media (max-width:920px){.hero-grid{grid-template-columns:1fr}}
+.pagehero{padding-block:clamp(36px,6vw,72px) 8px;background:radial-gradient(800px 360px at 90% 0,var(--glow),transparent 70%)}
+.pagehero .head{margin-bottom:0}
+.crumbs{display:flex;flex-wrap:wrap;gap:4px 8px;font-size:.84rem;color:var(--muted)}
+.crumbs a{display:inline-flex;align-items:center;min-height:32px;text-decoration:none}
+.crumbs a:hover{color:var(--fg);text-decoration:underline}
+
+.mock{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden;min-width:0;box-shadow:0 18px 50px rgba(0,0,0,.18)}
+.mock-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--line);background:var(--surface2);font-size:.74rem;letter-spacing:.1em;text-transform:uppercase}
+.mock-bar .chip{border-color:var(--warn);color:var(--warn)}
+.script{padding:16px 18px;border-bottom:1px solid var(--line);font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.82rem;line-height:1.7}
+.script b{display:block;font-weight:600;margin-bottom:4px}
+.script mark{background:none;color:inherit;border-bottom:2px solid var(--accent)}
+.elements{padding:14px 18px;display:grid;gap:10px}
+.erow{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.erow .dept{width:76px;font-family:ui-monospace,Menlo,monospace;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.chip{display:inline-flex;align-items:center;min-height:26px;padding:0 9px;border:1px solid var(--line);border-radius:999px;font-size:.74rem;white-space:nowrap}
+.chip.flag{border-color:var(--warn);color:var(--warn)}
+.chip.first{border-color:var(--accent);color:var(--accent)}
+.chip.proposed{border-style:dashed}
+.mock-foot{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding:12px 18px;border-top:1px solid var(--line);background:var(--surface2)}
+.mock-foot p{font-size:.84rem;color:var(--muted);flex:1 1 200px}
+.cap{font-size:.78rem;color:var(--muted);margin-top:10px}
+
+.proof{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);border-radius:10px;background:var(--surface);overflow:hidden}
+.proof>div{padding:18px 20px;border-right:1px solid var(--line);min-width:0}
+.proof>div:last-child{border-right:0}
+.proof .k{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.proof .v{font-weight:600;margin-top:4px}
+@media (max-width:760px){.proof{grid-template-columns:1fr}.proof>div{border-right:0;border-bottom:1px solid var(--line)}.proof>div:last-child{border-bottom:0}}
+
+.ph{outline:1.5px dashed var(--ph);outline-offset:3px;border-radius:4px}
+.phbox{border:1.5px dashed var(--ph);border-radius:10px;padding:18px 20px;color:var(--muted)}
+.phbox strong{color:var(--ph);font-family:ui-monospace,Menlo,monospace;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:6px}
+.banner{border:1px solid var(--warn);border-radius:10px;padding:14px 18px;color:var(--muted);font-size:.92rem}
+.banner b{color:var(--warn)}
+
+.grid{display:grid;gap:18px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+@media (max-width:980px){.g4{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:1fr 1fr}}
+@media (max-width:680px){.g2,.g3,.g4{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:24px;display:grid;gap:12px;align-content:start;min-width:0}
+.band.alt .card{background:var(--bg)}
+.card ul{margin:0;padding-left:1.1em;display:grid;gap:6px;color:var(--muted)}
+.card ul li::marker{color:var(--accent)}
+a.card{text-decoration:none;color:inherit}
+a.card:hover{border-color:var(--fg)}
+.num{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:3rem;line-height:1;color:var(--accent)}
+.pillar{padding:28px;gap:14px}
+.more{margin-top:6px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;color:var(--accent)}
+.more:hover{text-decoration:underline}
+.tagline{font-size:.76rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.gate{margin-top:6px;padding:10px 12px;border-left:3px solid var(--accent);background:var(--surface2);font-size:.9rem;color:var(--muted)}
+.gate b{color:var(--fg)}
+
+.hand{margin-top:34px}
+.hand:first-child{margin-top:0}
+.hand h3{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;margin-bottom:14px;border-bottom:1px solid var(--line);padding-bottom:8px}
+.hand h3 a{text-decoration:none}
+.hand h3 a:hover{text-decoration:underline}
+.hand h3 span{font-family:ui-monospace,Menlo,monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:400}
+.agent{gap:10px}
+.agent .top{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.agent .code{font-family:ui-monospace,Menlo,monospace;font-size:.78rem;color:var(--accent);font-weight:600}
+.agent h4{margin:0;font-family:"IBM Plex Sans",sans-serif;font-size:1.05rem;font-weight:600;line-height:1.3}
+.agent dl,dl.facts{margin:0;display:grid;gap:10px;font-size:.92rem}
+.agent dt,dl.facts dt{font-family:ui-monospace,Menlo,monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.agent dd,dl.facts dd{margin:0}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+.fbtn{min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--fg);font:500 .9rem "IBM Plex Sans",sans-serif;cursor:pointer}
+.fbtn[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);background:var(--glow)}
+.steps4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media (max-width:860px){.steps4{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.steps4{grid-template-columns:1fr}}
+.steps4>div{border:1px solid var(--line);border-radius:10px;padding:16px;background:var(--surface);min-width:0}
+.steps4>div.hl{border-color:var(--accent)}
+.steps4 .k{font-family:ui-monospace,Menlo,monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.steps4 p{margin-top:6px;font-size:.94rem}
+ul.links2{margin:0;padding:0;list-style:none;display:grid;gap:2px}
+ul.links2 a{display:flex;align-items:center;gap:10px;min-height:44px;text-decoration:none;color:var(--muted)}
+ul.links2 a:hover{color:var(--fg)}
+ul.links2 .c{font-family:ui-monospace,Menlo,monospace;font-size:.78rem;color:var(--accent);width:34px}
+
+.flow{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface);padding:18px}
+.flow svg{display:block;min-width:760px;width:100%;height:auto}
+.flow text{font-family:"IBM Plex Sans",sans-serif}
+
+details{border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+details+details{margin-top:10px}
+summary{cursor:pointer;min-height:56px;padding:14px 20px;display:flex;align-items:center;font-weight:600;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";margin-left:auto;font-size:1.4rem;color:var(--accent)}
+details[open] summary::after{content:"\2212"}
+details .a{padding:0 20px 18px;color:var(--muted);max-width:72ch}
+
+.cta{background:var(--surface);border-top:1px solid var(--line)}
+.cta-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,64px);align-items:start}
+@media (max-width:860px){.cta-grid{grid-template-columns:1fr}}
+form.demo{display:grid;gap:14px;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:24px}
+label{display:grid;gap:6px;font-size:.88rem;font-weight:500}
+input,select{min-height:48px;padding:0 12px;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--fg);font:400 1rem "IBM Plex Sans",sans-serif;width:100%}
+.err{color:var(--accent);font-size:.82rem;min-height:1em}
+.result{border:1px solid var(--ok);border-radius:10px;padding:18px;display:grid;gap:12px}
+.result pre{margin:0;white-space:pre-wrap;word-break:break-word;font:400 .85rem/1.6 ui-monospace,Menlo,monospace;background:var(--surface);padding:12px;border-radius:6px;border:1px solid var(--line)}
+.result .note{font-size:.88rem;color:var(--muted)}
+
+footer{border-top:1px solid var(--line);padding-block:44px 120px;color:var(--muted);font-size:.92rem}
+.fgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:28px}
+@media (max-width:760px){.fgrid{grid-template-columns:1fr}}
+footer h5{margin:0 0 8px;color:var(--fg);font:600 .78rem ui-monospace,Menlo,monospace;letter-spacing:.12em;text-transform:uppercase}
+footer a{display:flex;align-items:center;min-height:44px;text-decoration:none}
+footer a:hover{color:var(--fg)}
+.notes{margin-top:28px}
+.notes ul{margin:0;padding:0 20px 18px 38px;color:var(--muted);display:grid;gap:6px}
+
+.sticky{display:none}
+@media (max-width:720px){
+  .sticky{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:35;background:var(--bg);border-top:1px solid var(--line);padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+  .sticky .btn{width:100%}
+}
+[data-page][hidden]{display:none!important}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+
+/* directory */
+.dstats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:24px}
+.dstat{border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:var(--surface)}
+.dstat b{display:block;font:700 2.2rem/1 "Barlow Condensed",sans-serif;color:var(--accent)}
+.dstat span{font-size:.84rem;color:var(--muted)}
+.dtools{display:grid;gap:12px;margin-bottom:8px}
+.dtools .row2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,260px);gap:12px}
+.dtools label{font:500 .74rem ui-monospace,Menlo,monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px}
+.dphase{margin-top:34px}
+.dphase h3{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;border-bottom:1px solid var(--line);padding-bottom:8px}
+.dphase h3 span{font:400 .72rem ui-monospace,Menlo,monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.drow{display:grid;grid-template-columns:48px minmax(0,1fr) minmax(0,300px);gap:6px 18px;padding:16px 0;border-bottom:1px solid var(--line)}
+.drow .tn{font:600 .8rem ui-monospace,Menlo,monospace;color:var(--muted);padding-top:4px}
+.drow h4{margin:0;font:600 1.05rem/1.3 "IBM Plex Sans",sans-serif}
+.drow .d{color:var(--muted);font-size:.92rem;margin-top:2px}
+.drow .own{font:400 .76rem ui-monospace,Menlo,monospace;letter-spacing:.04em;color:var(--muted);margin-top:6px}
+.dag{display:flex;flex-wrap:wrap;gap:6px;align-content:flex-start}
+a.achip{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 12px;border:1px solid var(--line);border-radius:8px;text-decoration:none;font-size:.84rem;background:var(--surface)}
+a.achip:hover{border-color:var(--fg)}
+a.achip b{font:600 .78rem ui-monospace,Menlo,monospace;color:var(--accent)}
+a.achip small{color:var(--muted);font-size:.74rem}
+a.achip.first{border-color:var(--accent)}
+a.achip.proposed{border-style:dashed}
+.nohand{font-size:.84rem;color:var(--muted);border:1px dashed var(--line);border-radius:8px;padding:8px 12px;align-self:start}
+@media (max-width:720px){.drow{grid-template-columns:1fr}.drow .tn{padding:0}.dtools .row2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="w">
+    <nav class="nav" aria-label="Main">
+      <a class="logo" href="#home" aria-label="FilmCrab home">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="12" width="26" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 12 L27 5 L29 10 L5 17 Z" fill="var(--accent)"/><path d="M10 9.5 l3 4 M16 7.5 l3 4 M22 5.5 l3 4" stroke="var(--bg)" stroke-width="2"/></svg>
+        FILMCRAB
+      </a>
+      <div class="links">
+        <a href="#ai-agents" data-nav="ai-agents">AI Agents</a>
+        <a href="#custom-tools" data-nav="custom-tools">Custom Software</a>
+        <a href="#services" data-nav="services">Services</a>
+        <a href="#network" data-nav="network">Network</a>
+        <a href="#solutions" data-nav="solutions">Solutions</a>
+        <a href="#trust" data-nav="trust">Trust &amp; Security</a>
+      </div>
+      <a class="btn sm" href="#book-demo">Schedule an AI Demo</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<!-- HOME -->
+<div data-page="home" id="pg-home">
+  <section class="hero">
+    <div class="w">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Film &amp; entertainment AI &middot; by Aethron Technologies</p>
+          <h1>AI agents, custom software and production support for every stage of a film.</h1>
+          <p class="lead">FilmCrab agents draft the work, from script breakdown to release campaigns, and your First AD, Producer or Marketing head approves it. We also build custom software, run automated setups, support productions with experienced people, and introduce producers to talent and investors. Built first for Malayalam cinema.</p>
+          <div class="row">
+            <a class="btn" href="#book-demo">Schedule an AI Demo</a>
+            <a class="btn ghost" href="#ai-agents">Explore Film AI Use Cases</a>
+          </div>
+        </div>
+        <div>
+          <div class="mock" role="group" aria-label="Illustrative script breakdown review">
+            <div class="mock-bar mono"><span>Script breakdown &middot; draft</span><span class="chip">Illustrative scene</span></div>
+            <div class="script">
+              <b>14. EXT. BACKWATER JETTY &mdash; DAWN</b>
+              Mist on the water. <mark>MEERA</mark>, drenched, hauls a <mark>country boat</mark> to the jetty while <mark>APPU</mark> counts the <mark>nets</mark>. A distant <mark>engine</mark> coughs. <mark>Crows</mark> scatter.
+            </div>
+            <div class="elements">
+              <div class="erow"><span class="dept">Cast</span><span class="chip">Meera</span><span class="chip">Appu</span></div>
+              <div class="erow"><span class="dept">Art</span><span class="chip">Country boat</span><span class="chip">Fishing nets</span></div>
+              <div class="erow"><span class="dept">Costume</span><span class="chip flag">Wet saree &middot; inferred, please check</span></div>
+              <div class="erow"><span class="dept">Sound</span><span class="chip">Boat engine</span><span class="chip">Crows</span></div>
+            </div>
+            <div class="mock-foot">
+              <p id="mockMsg">Draft only. Nothing moves to scheduling or budget until a First AD approves.</p>
+              <button class="btn sm" id="mockBtn" type="button">Approve as First AD</button>
+            </div>
+          </div>
+          <p class="cap">Invented scene for illustration. Try the button: this is the rule every FilmCrab agent follows.</p>
+        </div>
+      </div>
+      <div class="proof" style="margin-top:44px">
+        <div><div class="k">First agent</div><div class="v">Script Breakdown, in design</div></div>
+        <div><div class="k">Operating rule</div><div class="v">AI drafts. A named person approves.</div></div>
+        <div><div class="k">Design partners</div><div class="v ph">Selecting first productions &middot; [CONFIRM terms]</div></div>
+      </div>
+      <div class="phbox" style="margin-top:14px"><strong>Placeholder &middot; client logos and credits</strong>Add production-house logos and film credits here only after a design partner agrees in writing. Do not publish production counts until they are real.</div>
+    </div>
+  </section>
+
+  <section class="band alt">
+    <div class="w">
+      <div class="head"><p class="eyebrow">What we offer</p><h2>Four ways FilmCrab goes to work for you</h2><p class="lead">Software that drafts, software built for you, people on the ground, and introductions to talent and money.</p></div>
+      <div class="grid g2">
+        <article class="card pillar">
+          <p class="tagline">1 &middot; AI agents</p>
+          <h3>Agents that draft, people who approve</h3>
+          <p class="muted">Twenty-one agents across creative development, planning, finance, production, post, release marketing, talent and financing. Each works up to an approval gate and names the person who signs off.</p>
+          <a class="more" href="#ai-agents">See all 21 agents &rarr;</a>
+          <a class="more" href="#directory">See the full workflow map &rarr;</a>
+        </article>
+        <article class="card pillar">
+          <p class="tagline">2 &middot; Custom software and automation</p>
+          <h3>Built around your production house</h3>
+          <p class="muted">Custom SaaS and applications for production houses, plus automated setups that connect agents to the sheets, drives and messaging you already use.</p>
+          <a class="more" href="#custom-tools">See custom software &rarr;</a>
+        </article>
+        <article class="card pillar">
+          <p class="tagline">3 &middot; Production services</p>
+          <h3>Experienced people, assisted by agents</h3>
+          <p class="muted">A script doctor, production unit support and other hands-on help in selected areas, with FilmCrab agents drafting the paperwork behind them.</p>
+          <a class="more" href="#services">See the services &rarr;</a>
+        </article>
+        <article class="card pillar">
+          <p class="tagline">4 &middot; Producer network</p>
+          <h3>Talent and investor introductions</h3>
+          <p class="muted">A Talent Engine that shortlists cast and crew for producers, and introductions between producers and investors that start from a prepared, approved package.</p>
+          <a class="more" href="#network">See the network &rarr;</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="w">
+      <div class="head"><p class="eyebrow">The agent line-up</p><h2>One group for every stage of a film</h2></div>
+      <div class="grid g3" id="homeGroups"></div>
+    </div>
+  </section>
+
+  <section class="band alt">
+    <div class="w">
+      <div class="head"><p class="eyebrow">Who it's for</p><h2>Pick your path</h2></div>
+      <div class="grid g3">
+        <article class="card"><p class="tagline">Production houses</p><h3>Cost, scale and control</h3><p class="muted">Production managers, First ADs and line producers: breakdown, schedule, call sheets, reports and cost tracking from one approved record.</p><a class="more" href="#seg-production">See this path &rarr;</a></article>
+        <article class="card"><p class="tagline">Writers and directors</p><h3>Less admin, more film</h3><p class="muted">Writers, directors and independent producers: develop a script and its pitch bible with an agent that never moves on without your approval.</p><a class="more" href="#seg-creative">See this path &rarr;</a></article>
+        <article class="card"><p class="tagline">Post, distribution and marketing</p><h3>Finish it and get it seen</h3><p class="muted">Subtitles, deliverables, asset rights, release calendars and campaign content, with a named approver on all of it.</p><a class="more" href="#seg-release">See this path &rarr;</a></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="how-it-works">
+    <div class="w">
+      <div class="head"><p class="eyebrow">How it works</p><h2>From audit to automated pipeline in three steps</h2></div>
+      <div class="grid g3">
+        <article class="card"><span class="num">01</span><h3>Audit production needs</h3><p class="muted">We sit with your production manager, First AD or marketing head, map how work really flows, and pick the one bottleneck worth fixing first.</p><div class="gate"><b>You approve:</b> the scope and the success metric.</div></article>
+        <article class="card"><span class="num">02</span><h3>Deploy custom agents &amp; tools</h3><p class="muted">We set up the agents and tools for that bottleneck and run them beside your team on authorized or synthetic data first.</p><div class="gate"><b>You approve:</b> every output, until the numbers earn trust.</div></article>
+        <article class="card"><span class="num">03</span><h3>Scale output &amp; automate pipelines</h3><p class="muted">Once an agent proves itself on its metric, the next one is added. Each reads the same project record.</p><div class="gate"><b>You approve:</b> moving to the next agent. It must pass its gate.</div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band alt" id="faq">
+    <div class="w">
+      <div class="head"><p class="eyebrow">Questions producers ask</p><h2>Straight answers</h2></div>
+      <div style="max-width:860px">
+        <details><summary>Does the AI make creative decisions?</summary><div class="a">No. Agents draft administrative and analytical work, and in the creative group they help a writer develop material. Every output waits for a named approver, and the writer approves every stage of the screenplay co-writer.</div></details>
+        <details><summary>Does it handle Malayalam and Manglish scripts?</summary><div class="a">That is the first thing we test. Malayalam, Manglish and non-standard script formats are the main failure risk for the Script Breakdown Agent, so it is measured against human breakdowns on authorized or synthetic scripts before anyone relies on it.</div></details>
+        <details><summary>Are all 21 agents available?</summary><div class="a">No. One is being built first, the rest are planned or proposed. Each agent page shows its real status, and we only change it when the agent passes its gate.</div></details>
+        <details><summary>Who owns our scripts and data?</summary><div class="a ph">[CONFIRM with legal: ownership, storage location, retention, whether data is ever used to train models, and the NDA process before any script is uploaded.]</div></details>
+        <details><summary>What does a pilot involve, and what does it cost?</summary><div class="a ph">[CONFIRM: pilot scope, duration, price and design-partner terms.] What we can say now: it starts with a production audit and one agent aimed at one bottleneck, with a success metric agreed up front.</div></details>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- SOLUTIONS -->
+<div data-page="solutions" id="pg-solutions" hidden>
+  <section class="pagehero"><div class="w"><div class="head"><p class="eyebrow">Solutions</p><h1>Three ways in, one approval rule.</h1><p class="lead">Pick the path closest to your job. The costly workflows below are what we are testing with producers and marketers, not proven findings.</p></div></div></section>
+
+  <section class="band" id="seg-production">
+    <div class="w"><div class="grid g2">
+      <div class="head" style="margin:0"><p class="eyebrow">For production houses</p><h2>The production office, drafted for you</h2><p class="lead">Production managers, First ADs and line producers.</p>
+        <div class="banner"><b>Hypothesis we are testing:</b> breakdown, scheduling, call sheets and daily reports are rebuilt by hand across spreadsheets and messages. We will size the cost with real productions before claiming a result.</div>
+        <div class="row"><a class="btn" href="#book-demo" data-b="Script breakdown">Plan a Studio Rollout</a></div></div>
+      <div class="card"><h3>Agents for this path</h3><ul class="links2" data-agents="A1,A2,A3,A4,A5,A6,A7,A8,A9,T1,N1"></ul></div>
+    </div></div>
+  </section>
+  <section class="band alt" id="seg-creative">
+    <div class="w"><div class="grid g2">
+      <div class="head" style="margin:0"><p class="eyebrow">For writers and directors</p><h2>Develop the film, keep the voice</h2><p class="lead">Writers, directors and independent producers.</p>
+        <div class="banner"><b>Hypothesis we are testing:</b> developing a script and a visual pitch bible takes long solo effort that a staged co-writer can shorten, as long as the writer approves every stage.</div>
+        <div class="row"><a class="btn" href="#book-demo" data-b="Script development &amp; creative">Try It on One Idea</a></div></div>
+      <div class="card"><h3>Agents for this path</h3><ul class="links2" data-agents="C1,C2"></ul></div>
+    </div></div>
+  </section>
+  <section class="band" id="seg-release">
+    <div class="w"><div class="grid g2">
+      <div class="head" style="margin:0"><p class="eyebrow">For post, distribution and marketing</p><h2>Finish it, then get it seen</h2><p class="lead">Post supervisors, distributors, publicists and marketing heads.</p>
+        <div class="banner"><b>Hypothesis we are testing:</b> campaign execution for Malayalam releases is largely manual and under-served. Existing analytics tools we found target studios and distributors; we have not verified a gap yet.</div>
+        <div class="row"><a class="btn" href="#book-demo" data-b="Release &amp; marketing">Deploy Your First Film Agent</a></div></div>
+      <div class="card"><h3>Agents for this path</h3><ul class="links2" data-agents="A10,A11,M1,M2,M3,M4,M5,M6"></ul></div>
+    </div></div>
+  </section>
+</div>
+
+<!-- CUSTOM SOFTWARE -->
+<div data-page="custom-tools" id="pg-tools" hidden>
+  <section class="pagehero"><div class="w"><div class="head"><p class="eyebrow">Custom Software &amp; Automation</p><h1>Custom SaaS and automated setups, built around your production house.</h1><p class="lead">When no off-the-shelf product fits, we build the application that does. When your tools are fine but disconnected, we set up the automation between them.</p><div class="row"><a class="btn" href="#book-demo" data-b="Custom software or automation setup">Build Custom Studio Tool</a></div></div></div></section>
+
+  <section class="band"><div class="w"><div class="head"><p class="eyebrow">Two ways to work with us</p><h2>Build it, or wire it up</h2></div>
+    <div class="grid g2">
+      <article class="card pillar"><p class="tagline">Custom SaaS and applications</p><h3>A product built for your production house</h3><p class="muted">A production management app, department portals, approval workflows or dashboards, built for how your house runs. Hypothesis to test: some houses will want to run it as a subscription over time. <span class="ph">[CONFIRM: commercial model]</span></p></article>
+      <article class="card pillar"><p class="tagline">Automated setups</p><h3>Your tools, finally working together</h3><p class="muted">We configure FilmCrab agents and integrations into the sheets, drives and messaging you already use, so they start doing the drafting. No rebuild, and a named person still approves every output.</p></article>
+    </div>
+    <div class="banner" style="margin-top:18px"><b>What we are testing:</b> whether production houses will pay for tailored software or setups instead of off-the-shelf tools. Price and model will be set from customer evidence, not assumed.</div>
+  </div></section>
+
+  <section class="band alt"><div class="w"><div class="head"><p class="eyebrow">Problem</p><h2>Production runs on glue</h2></div>
+    <div class="grid g3">
+      <article class="card"><h3>Spreadsheets as systems</h3><p class="muted">Critical schedules and cost sheets live in files that one person understands and everyone edits.</p></article>
+      <article class="card"><h3>Chat as a process</h3><p class="muted">Approvals, changes and call times move through group messages that are impossible to audit afterwards.</p></article>
+      <article class="card"><h3>Tools that don't talk</h3><p class="muted">Scheduling, budgeting and post trackers each hold a version of the truth, and someone retypes between them.</p></article>
+    </div></div></section>
+
+  <section class="band"><div class="w"><div class="head"><p class="eyebrow">Typical builds</p><h2>What we scope with production houses</h2><p class="lead">Examples of engagement types, not boxed products.</p></div>
+    <div class="grid g3">
+      <article class="card"><h3>Production management app</h3><p class="muted">Projects, scenes, schedules, approvals and reports in one place for your house.</p></article>
+      <article class="card"><h3>Department portals</h3><p class="muted">Each department sees only its scenes, elements and changes, so packets stop being emailed PDFs.</p></article>
+      <article class="card"><h3>Call sheet and report tooling</h3><p class="muted">Call sheets and daily reports generated from approved data, in your format, for approval before sending.</p></article>
+      <article class="card"><h3>Schedule and cost dashboards</h3><p class="muted">Live variance against schedule and budget, flagged by the tolerance your controller sets.</p></article>
+      <article class="card"><h3>Campaign and asset tools</h3><p class="muted">Approved assets, rights and release calendars in one place, so nothing goes out without a recorded approval.</p></article>
+      <article class="card"><h3>Pipeline integrations</h3><p class="muted">Move data between the tools you already run, without retyping.</p></article>
+    </div></div></section>
+
+  <section class="band alt"><div class="w"><div class="head"><p class="eyebrow">How we build</p><h2>Four steps, one signature before code</h2></div>
+    <div class="grid g4">
+      <article class="card"><span class="num">01</span><h3>Audit</h3><p class="muted">Map the real workflow with the people who run it. Agree the metric that defines success.</p></article>
+      <article class="card"><span class="num">02</span><h3>Specify</h3><p class="muted">A written spec your production manager signs before any code is written.</p></article>
+      <article class="card"><span class="num">03</span><h3>Build and test</h3><p class="muted">Delivered in small pieces, tested on authorized or synthetic data first.</p></article>
+      <article class="card"><span class="num">04</span><h3>Hand over</h3><p class="muted">Documentation, training and a clear owner on your side. <span class="ph">[CONFIRM: code ownership and support terms]</span></p></article>
+    </div></div></section>
+
+  <section class="band"><div class="w"><div class="head"><p class="eyebrow">Case study</p><h2>First custom build</h2></div>
+    <div class="grid g3">
+      <div class="phbox"><strong>The problem</strong>What the studio was doing by hand, in their words. [Fill after first engagement]</div>
+      <div class="phbox"><strong>What we built</strong>Scope, integrations, what was deliberately left out. [Fill]</div>
+      <div class="phbox"><strong>Outcome</strong>Measured change against the baseline, plus a quote with permission. [None yet]</div>
+    </div>
+    <div class="row" style="margin-top:28px"><a class="btn" href="#book-demo" data-b="Custom software or automation setup">Build Custom Studio Tool</a></div></div></section>
+</div>
+
+<!-- SERVICES -->
+<div data-page="services" id="pg-services" hidden>
+  <section class="pagehero"><div class="w"><div class="head"><p class="eyebrow">Production Services</p><h1>Some problems need an experienced person on the ground.</h1><p class="lead">A small set of human-led services, assisted by FilmCrab agents where they help. People do the judgment work, and agents draft the paperwork behind them.</p>
+    <div class="banner"><b>Status:</b> being validated. Who delivers each service, in which areas and at what price are still being confirmed.</div>
+    <div class="row"><a class="btn" href="#book-demo" data-b="Script doctor or production support">Request a Services Call</a></div></div></div></section>
+
+  <section class="band"><div class="w"><div class="head"><p class="eyebrow">What we can support</p><h2>Services, in the order a film needs them</h2></div>
+    <div class="grid g3">
+      <article class="card"><p class="tagline">Development</p><h3>Script doctor</h3><p class="muted">Expert review of a screenplay: structure, character and pacing, with a written rewrite plan. The Script Breakdown Agent supplies scene-level facts; the writer decides every change.</p><p class="muted ph">[CONFIRM: who delivers, credentials, languages, price]</p></article>
+      <article class="card"><p class="tagline">Pre-production</p><h3>Agent-run planning</h3><p class="muted">For productions that don't want to learn a tool: we run the breakdown, schedule and budget agents for you, and your First AD approves each output.</p><p class="muted ph">[CONFIRM: scope and price]</p></article>
+      <article class="card"><p class="tagline">Shoot</p><h3>Production unit support</h3><p class="muted">Hands-on coordination, scheduling and daily reporting support for a shoot, with agents drafting the call sheets and reports.</p><p class="muted ph">[CONFIRM: scope, crew, areas covered, price]</p></article>
+      <article class="card"><p class="tagline">Post and release</p><h3>Post and release support</h3><p class="muted">Deliverables tracking, subtitle review coordination and campaign execution support, with a named approver on all of it.</p><p class="muted ph">[CONFIRM: scope and price]</p></article>
+      <article class="card"><p class="tagline">More</p><h3>Other support on request</h3><p class="muted ph">[CONFIRM: the full list of services you will offer and where.]</p></article>
+      <div class="phbox"><strong>Placeholder &middot; credits</strong>Add the script doctor's and the unit team's real credits only with their permission. None are invented here.</div>
+    </div></div></section>
+
+  <section class="band alt"><div class="w"><div class="head"><p class="eyebrow">How an engagement works</p><h2>Five steps, one named person</h2></div>
+    <div class="grid g3">
+      <article class="card"><span class="num">01</span><h3>Brief</h3><p class="muted">You describe the problem. We ask for the evidence: the script, the schedule, the sheet.</p></article>
+      <article class="card"><span class="num">02</span><h3>Scope and price in writing</h3><p class="muted">What is included, who delivers it, and how success is measured.</p></article>
+      <article class="card"><span class="num">03</span><h3>Delivery</h3><p class="muted">A named person does the work. Agents draft; nothing goes out unreviewed.</p></article>
+      <article class="card"><span class="num">04</span><h3>Review</h3><p class="muted">You approve the output against the metric you agreed.</p></article>
+      <article class="card"><span class="num">05</span><h3>Handover or next step</h3><p class="muted">Keep the result, or turn it into an agent or custom tool if the work repeats.</p></article>
+    </div></div></section>
+</div>
+
+<!-- NETWORK -->
+<div data-page="network" id="pg-network" hidden>
+  <section class="pagehero"><div class="w"><div class="head"><p class="eyebrow">Producer Network</p><h1>Find the people and the money, starting from a prepared package.</h1><p class="lead">FilmCrab helps producers shortlist talent and prepare an investor-ready package. Introductions are made by people, with consent on both sides.</p>
+    <div class="banner"><b>Status:</b> being validated. We have no investor or talent network to show yet, and we make no promise of funding, casting or returns.</div>
+    <div class="row"><a class="btn" href="#book-demo" data-b="Talent or financing introductions">Request an Introduction</a></div></div></div></section>
+
+  <section class="band"><div class="w"><div class="grid g2">
+    <article class="card pillar"><p class="tagline">For producers</p><h3>The Talent Engine</h3><p class="muted">Describe a role. The Talent Engine drafts a shortlist of cast or crew with the reasons for each name and any availability notes. The producer and casting director review it.</p>
+      <ul><li>It never contacts talent or shares a profile without consent.</li><li>It reads only profiles that are yours or that talent has agreed to share.</li><li>The producer and casting director approve every shortlist.</li></ul>
+      <a class="more" href="#agent-t1">See the Talent Engine &rarr;</a></article>
+    <article class="card pillar"><p class="tagline">For producers and investors</p><h3>Introductions that start from a package</h3><p class="muted">A producer prepares a package from documents that are already approved: breakdown, schedule, budget draft and synopsis. After a completeness review, we introduce it to investors who have asked to see projects like it.</p>
+      <ul><li>The Financing Package Builder assembles the package; the producer approves it.</li><li>Introductions are made by a person, with consent on both sides.</li><li>Terms are negotiated directly between the parties.</li></ul>
+      <a class="more" href="#agent-n1">See the package builder &rarr;</a></article>
+  </div></div></section>
+
+  <section class="band alt"><div class="w"><div class="head"><p class="eyebrow">How introductions work</p><h2>Four steps</h2></div>
+    <div class="grid g4">
+      <article class="card"><span class="num">01</span><h3>Prepare</h3><p class="muted">The producer builds the package with FilmCrab agents, each document approved by a named person.</p></article>
+      <article class="card"><span class="num">02</span><h3>Review</h3><p class="muted">A person checks the package for completeness and consistency.</p></article>
+      <article class="card"><span class="num">03</span><h3>Introduce</h3><p class="muted">Introductions go only to investors or talent who opted in, and only with the producer's consent.</p></article>
+      <article class="card"><span class="num">04</span><h3>Step back</h3><p class="muted">The parties talk and agree terms directly. <span class="ph">[CONFIRM: whether FilmCrab ever holds funds or takes a fee]</span></p></article>
+    </div>
+    <div class="grid g2" style="margin-top:18px">
+      <div class="phbox"><strong>Placeholder &middot; legal</strong>[CONFIRM with a lawyer: the rules for introducing investors to film projects and for any fee, before this service is offered or advertised.]</div>
+      <div class="phbox"><strong>Placeholder &middot; network proof</strong>No investor, producer or talent logos until they are real and have agreed in writing to be shown.</div>
+    </div>
+  </div></section>
+</div>
+
+<!-- TRUST -->
+<div data-page="trust" id="pg-trust" hidden>
+  <section class="pagehero"><div class="w"><div class="head"><p class="eyebrow">Trust &amp; Security</p><h1>The film is yours. So is every decision.</h1><p class="lead">Film IP and reliability are the real objections, so we answer them with how FilmCrab is built, not with badges.</p></div></div></section>
+  <section class="band"><div class="w">
+    <div class="grid g4">
+      <article class="card"><h3>Human approval</h3><p class="muted">AI suggests, a human verifies, an authorized person approves, then the system executes. No agent sends, publishes or changes a schedule alone.</p></article>
+      <article class="card"><h3>A named approver</h3><p class="muted">Each agent lists who signs off: First AD, Production Controller, Producer, translator, Marketing head. Nothing is approved by "the system".</p></article>
+      <article class="card"><h3>Tested before trusted</h3><p class="muted">An agent isn't called ready until it has run on authorized data and met its metric. Until then it is labeled first build, planned or proposed.</p></article>
+      <article class="card"><h3>Data boundaries</h3><p class="muted ph">Your scripts, your project, your access list. [CONFIRM: hosting region, retention, training policy, NDA template]</p></article>
+    </div>
+    <div class="head" style="margin-top:44px"><p class="eyebrow">Marketing guardrails</p><h2>Release work has extra rules</h2></div>
+    <div class="grid g2">
+      <article class="card"><ul><li>No fake reviews and no bot engagement, ever.</li><li>No star's likeness or music used without a recorded approval.</li></ul></article>
+      <article class="card"><ul><li>Release embargoes are tracked and enforced before anything is queued.</li><li>AI-generated imagery is labeled as such.</li></ul></article>
+    </div>
+    <div class="grid g2" style="margin-top:18px">
+      <div class="phbox"><strong>Placeholder &middot; security pack</strong>Link the NDA template, data-handling summary and any compliance statement once legal and engineering have confirmed them.</div>
+      <div class="phbox"><strong>Placeholder &middot; testimonial</strong>Add a producer or First AD quote after the first pilot, with their written permission. None exists yet, and none should be invented.</div>
+    </div>
+    <div class="row" style="margin-top:28px"><a class="btn" href="#book-demo">Request the Security Pack</a></div>
+  </div></section>
+</div>
+
+<!-- PROOF -->
+<div data-page="proof" id="pg-proof" hidden>
+  <section class="pagehero"><div class="w"><div class="head"><p class="eyebrow">Proof</p><h1>Real results will live here, and only real ones.</h1><p class="lead">No pilot has finished yet, so this page is empty on purpose. When one does, it will show the baseline, the result and the approver's own words.</p></div></div></section>
+  <section class="band"><div class="w">
+    <div class="grid g3">
+      <div class="phbox"><strong>Baseline</strong>How long the task took before, who did it, and how it was measured.</div>
+      <div class="phbox"><strong>Result</strong>The metric the pilot was judged on, from the production's own records.</div>
+      <div class="phbox"><strong>Quote</strong>From the First AD, Producer or Marketing head who approved the output, with permission.</div>
+    </div>
+    <div class="card" style="margin-top:18px"><h3>How we will judge the first agent</h3><p class="muted">The Script Breakdown Agent will be scored on element-level agreement with a human breakdown, the share of elements a reviewer edits, and minutes per script, with Malayalam, Manglish and English scored separately.</p></div>
+    <div class="row" style="margin-top:28px"><a class="btn" href="#book-demo">Become a Design Partner</a></div>
+  </div></section>
+</div>
+
+<!-- ABOUT -->
+<div data-page="about" id="pg-about" hidden>
+  <section class="pagehero"><div class="w"><div class="head"><p class="eyebrow">About</p><h1>AI agents for films, built for the way films are made.</h1></div></div></section>
+  <section class="band"><div class="w"><div class="grid g2">
+    <div class="card"><h3>What FilmCrab is</h3><p class="muted"><b style="color:var(--fg)">FilmCrab</b> is a film and entertainment AI platform by Aethron Technologies Private Limited. It builds AI agents and custom software tools for film and television production, starting with Malayalam cinema in Kerala, India. Every agent drafts work and a named human approves it.</p></div>
+    <div class="card"><h3>Who is behind it</h3><p class="muted ph">[Add founder and team details you want public. Nothing is invented here.]</p></div>
+  </div></div></section>
+</div>
+
+<!-- DYNAMIC: hub, group and agent pages -->
+<div data-page="dyn" id="pg-dyn" hidden></div>
+</main>
+
+<section class="band cta" id="book-demo">
+  <div class="w">
+    <div class="cta-grid">
+      <div class="head" style="margin:0">
+        <p class="eyebrow">Book a demo</p>
+        <h2>See an agent work on a scene from your film.</h2>
+        <p class="lead">Four fields. Tell us where production slows down and we'll show you what an agent would draft for it.</p>
+      </div>
+      <div>
+        <form class="demo" id="demoForm" novalidate>
+          <label>Your name<input name="name" autocomplete="name" required><span class="err" data-for="name"></span></label>
+          <label>Studio or company<input name="company" autocomplete="organization" required><span class="err" data-for="company"></span></label>
+          <label>Primary bottleneck
+            <select name="bottleneck" required>
+              <option value="">Choose one</option>
+              <option>Script breakdown</option><option>Scheduling</option><option>Budgeting &amp; cost tracking</option>
+              <option>Call sheets &amp; daily reports</option><option>Post-production &amp; deliverables</option>
+              <option>Release &amp; marketing</option><option>Script development &amp; creative</option><option>Custom software or automation setup</option><option>Script doctor or production support</option><option>Talent or financing introductions</option><option>Something else</option>
+            </select><span class="err" data-for="bottleneck"></span></label>
+          <label>Work email<input name="email" type="email" autocomplete="email" required><span class="err" data-for="email"></span></label>
+          <button class="btn" type="submit">Book My AI Demo</button>
+        </form>
+        <div class="result" id="demoResult" hidden>
+          <strong>Your demo request is ready</strong>
+          <pre id="brief"></pre>
+          <div class="row"><button class="btn sm" id="copyBrief" type="button">Copy request</button><button class="btn sm ghost" id="editBrief" type="button">Edit details</button></div>
+          <p class="note">This draft site isn't connected to an inbox yet, so nothing has been sent. Copy the request and send it to the FilmCrab team directly.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="w">
+    <div class="fgrid">
+      <div>
+        <p class="logo" style="margin-bottom:10px;color:var(--fg)">FILMCRAB</p>
+        <p><b style="color:var(--fg)">FilmCrab</b> is a film and entertainment AI platform by Aethron Technologies Private Limited. It builds AI agents and custom software tools for film and television production, starting with Malayalam cinema in Kerala, India. Every agent drafts work and a named human approves it.</p>
+      </div>
+      <div><h5>Explore</h5><a href="#ai-agents">AI Agents</a><a href="#directory">Agent Directory</a><a href="#custom-tools">Custom Software</a><a href="#services">Services</a><a href="#network">Network</a><a href="#solutions">Solutions</a><a href="#trust">Trust &amp; Security</a><a href="#proof">Proof</a><a href="#about">About</a></div>
+      <div><h5>Start</h5><a href="#book-demo">Schedule an AI Demo</a><a href="#how-it-works">How It Works</a><a href="#faq">FAQ</a></div>
+    </div>
+    <p style="margin-top:28px;font-size:.84rem">&copy; 2026 Aethron Technologies Private Limited. FilmCrab is a product of Aethron Technologies.</p>
+    <details class="notes">
+      <summary>Draft notes &mdash; remove before launch</summary>
+      <ul>
+        <li>Every dashed amber box or outline is a placeholder. Replace it with a real, permissioned fact or delete it.</li>
+        <li>No client logos, production counts, testimonials or benchmark results appear because none exist yet. Don't add any that aren't real.</li>
+        <li>Agent pages are generated from one list in this file. Statuses mirror the Workbench: one first build, the rest planned or proposed. Update them only when an agent passes its gate.</li>
+        <li>Proposed agents (C1, C2, M1 to M6, T1, N1) carry draft specifications that have not been tested with a customer.</li>
+        <li>Services (script doctor, production unit support) need a named person to deliver them, a defined area, and a price before they are advertised.</li>
+        <li>Investor introductions: get legal advice on the rules for introducing investors to film projects and for any fee before offering or advertising this. Make no promise of funding or returns.</li>
+        <li>Talent Engine: use only profiles the producer owns or talent has consented to share. Never scrape.</li>
+        <li>Confirm with legal and engineering: data ownership, hosting region, retention, model-training policy, NDA process.</li>
+        <li>Confirm commercial terms: pilot scope, duration, price, design-partner terms, code ownership.</li>
+        <li>Connect the demo form to a real inbox or CRM. Today it only builds a copyable request.</li>
+        <li>Before launch on your own domain: add real page URLs to the schema, check page speed, and confirm the three solution segments after your first interviews.</li>
+      </ul>
+    </details>
+  </div>
+</footer>
+
+<div class="sticky" id="sticky"><a class="btn" href="#book-demo">Schedule an AI Demo</a></div>
+
+<script>
+(function(){
+  var STATIC=['home','solutions','custom-tools','services','network','trust','proof','about'];
+  var PAGE_EL={'home':'pg-home','solutions':'pg-solutions','custom-tools':'pg-tools','services':'pg-services','network':'pg-network','trust':'pg-trust','proof':'pg-proof','about':'pg-about'};
+  var current='home';
+
+  var GROUPS=[
+    {s:'story',n:'Story and Creative',note:'Understand the script, and help create it',intro:'Agents that help a writer develop a film and turn a locked script into a reviewed breakdown.'},
+    {s:'planning',n:'Planning',note:'Turn the script into a plan',intro:'Agents that draft the schedule, the call sheets and the department packets from an approved breakdown.'},
+    {s:'finance',n:'Finance',note:'Keep it affordable',intro:'Agents that draft a budget and flag cost and schedule variance while there is still time to act.'},
+    {s:'production',n:'Production',note:'Run the shoot',intro:'Agents that draft the daily report and track readiness before and during the shoot.'},
+    {s:'post',n:'Post',note:'Finish the film',intro:'Agents that track deliverables and draft subtitles for human review.'},
+    {s:'talent',n:'Talent and Network',note:'Find the people and the money',intro:'Agents that help producers shortlist talent and assemble an investor-ready package. Introductions themselves are made by people, with consent on both sides.'},
+    {s:'release',n:'Release and Marketing',note:'Get it seen, safely',intro:'Agents that draft campaign content, track asset rights and embargoes, plan the release calendar and read what is landing with audiences.'}
+  ];
+  var ST={first:'First build',planned:'Planned',proposed:'Proposed'};
+  var T={ai:'AI-led',hybrid:'Hybrid',auto:'Plain automation',analysis:'Analysis'};
+
+  var AGENTS=[
+   {c:'C1',n:'Screenplay Co-Writer',g:'story',t:'ai',s:'proposed',b:'Script development & creative',after:[],
+    job:'Take a core idea through staged development to a full screenplay and a visual pitch bible.',trig:'The writer starts a project with a core idea.',inp:'The writer\'s idea and notes, and the writer\'s approval at every stage.',out:'Stage-by-stage development drafts, a screenplay and a visual pitch bible.',appr:'The writer approves every stage before the next begins.',alone:'Drafts the next stage only after approval of the last.',metric:'Share of drafted material the writer keeps. To be agreed with the first writer.',fail:'A generic voice; Malayalam idiom flattened.'},
+   {c:'C2',n:'Makeup, Hair and Prosthetics Suite',g:'story',t:'hybrid',s:'proposed',b:'Script development & creative',after:['A1'],
+    job:'Draft look designs and continuity notes for makeup, hair and prosthetics from the approved breakdown.',trig:'Approved breakdown with makeup and hair elements.',inp:'Approved breakdown, character notes and reference images supplied by the department.',out:'Look sheets and continuity notes per character.',appr:'Head of the makeup department.',alone:'Drafts look sheets in a review state.',metric:'Share of look sheets the department keeps without edits. To be agreed with the department.',fail:'Continuity errors across scenes shot out of order.'},
+   {c:'T1',n:'Talent Engine',g:'talent',t:'hybrid',s:'proposed',b:'Talent or financing introductions',after:[],
+    job:'Shortlist cast and crew for a role from the producer\'s brief, with the reasons for each name.',trig:'Producer submits a casting or crew brief.',inp:'The brief, and profiles that are the producer\'s own or that talent has agreed to share.',out:'A shortlist with reasons and availability notes, for the producer to review.',appr:'Producer and casting director.',alone:'Drafts shortlists. It never contacts talent or shares a profile without consent.',metric:'Share of shortlisted names the casting director keeps. To be agreed with a producer.',fail:'Stale availability, biased shortlists, or profiles used without consent.'},
+   {c:'N1',n:'Financing Package Builder',g:'talent',t:'hybrid',s:'proposed',b:'Talent or financing introductions',after:['A1','A3','A6'],
+    job:'Assemble a producer\'s investor-ready package from documents that are already approved.',trig:'Producer requests a package.',inp:'Approved breakdown, schedule, budget draft, synopsis and team details.',out:'A package whose numbers and documents come only from approved sources.',appr:'Producer approves before anything is shared.',alone:'Assembles the draft. It never sends anything to an investor.',metric:'Edits the producer makes before approval; mismatches against the approved budget: none.',fail:'Numbers that do not match the approved budget.'},
+   {c:'A1',n:'Script Breakdown Agent',g:'story',t:'ai',s:'first',b:'Script breakdown',after:[],
+    job:'Turn a locked script into a scene-by-scene breakdown, ready for review.',trig:'Locked script uploaded.',inp:'Authorized script; department taxonomy.',out:'Scene list; elements tagged by department; a one-liner per scene; confidence flags.',appr:'First AD or Script Supervisor approves every breakdown before any downstream use.',alone:'Drafts in a review state.',metric:'Element-level agreement with a human breakdown on a test set; share of elements the reviewer edits; minutes per script.',fail:'Malayalam, Manglish or non-standard script formats misparsed; missed elements.'},
+   {c:'A2',n:'Revision Impact Agent',g:'story',t:'hybrid',s:'planned',b:'Script breakdown',after:['A1'],
+    job:'Show what a script revision changes, before it surprises the shoot.',trig:'New script revision uploaded.',inp:'Previous and new script versions; approved breakdown.',out:'Changed scenes, affected elements, departments and schedule days.',appr:'Script Supervisor; Producer for any change after lock. Notifications are sent only after approval.',alone:'Flags impacts and drafts notifications.',metric:'Missed-impact rate against a human review.',fail:'Subtle changes missed.'},
+   {c:'A3',n:'Schedule Agent',g:'planning',t:'hybrid',s:'planned',b:'Scheduling',after:['A1'],
+    job:'Draft a shooting schedule and show the reason for every grouping.',trig:'Approved breakdown plus availability data.',inp:'Approved breakdown, cast and location availability, scene priority map.',out:'Draft stripboard with the reason for each grouping and a list of conflicts; day-out-of-days.',appr:'First AD and Production Manager approve before publishing or changing the schedule.',alone:'Drafts schedule options.',metric:'Zero hard-constraint violations; First AD acceptance of the draft.',fail:'Draft ignores real-world constraints that are not in the data.'},
+   {c:'A4',n:'Call Sheet Builder',g:'planning',t:'auto',s:'planned',b:'Call sheets & daily reports',after:['A3'],
+    job:'Fill the call sheet from the approved schedule.',trig:'Approved schedule day.',inp:'Approved schedule day, cast and crew contacts, location details, weather.',out:'Call sheet draft.',appr:'First AD approves before anything is sent.',alone:'Fills the call sheet draft from the schedule.',metric:'Share of fields filled without retyping; errors found by the First AD.',fail:'Stale data when the schedule changes late.'},
+   {c:'A5',n:'Department Packet Builder',g:'planning',t:'auto',s:'planned',b:'Scheduling',after:['A1'],
+    job:'Give each department only the scenes and elements it needs.',trig:'Approved breakdown.',inp:'Approved breakdown; department taxonomy.',out:'One packet per department with only its tagged elements, scene by scene.',appr:'Production Coordinator checks before sharing.',alone:'Builds packets in a review state.',metric:'Departments report that packets are complete and match the script.',fail:'Elements mis-tagged upstream land in the wrong packet.'},
+   {c:'A6',n:'Budget Draft Agent',g:'finance',t:'hybrid',s:'planned',st:'Planned, if demand is confirmed',b:'Budgeting & cost tracking',after:['A1'],
+    job:'Draft a budget by department from the approved breakdown.',trig:'Approved breakdown plus rate cards.',inp:'Approved breakdown, rate cards, budget ceiling.',out:'Draft budget by department.',appr:'Production Controller reviews; Producer signs the total.',alone:'Drafts line items and totals.',metric:'Variance of the draft against the final human budget, by department.',fail:'Local rates missing or out of date.'},
+   {c:'A7',n:'Cost and Progress Tracker',g:'finance',t:'auto',s:'planned',b:'Budgeting & cost tracking',after:['A6','A8'],
+    job:'Flag cost and schedule variance the same week it appears.',trig:'Daily reports and expenses.',inp:'Daily reports, expense entries, schedule, budget.',out:'Variance report against schedule and budget.',appr:'Production Controller.',alone:'Calculates variances and flags breaches of tolerance.',metric:'Variance reported within the same week.',fail:'Late or missing expense entries.'},
+   {c:'A8',n:'Daily Report Agent',g:'production',t:'hybrid',s:'planned',b:'Call sheets & daily reports',after:['A4'],
+    job:'Draft the daily production report from the day\'s logs.',trig:'Wrap, with continuity and shot logs.',inp:'Call sheet, continuity notes, shot logs, wrap times.',out:'Draft Daily Production Report.',appr:'Production Manager or First AD signs.',alone:'Drafts the report.',metric:'Edits the Production Manager makes before signing.',fail:'Incomplete logs produce a wrong summary.'},
+   {c:'A9',n:'Readiness Tracker',g:'production',t:'auto',s:'planned',b:'Call sheets & daily reports',after:['A3'],
+    job:'Track recce and go or hold items until the shoot is ready.',trig:'Schedule locked.',inp:'Locked schedule, location list, permit and insurance records.',out:'Recce and go or hold checklists with open items and owners.',appr:'Producer signs the go or hold decision.',alone:'Tracks items and reminds owners.',metric:'Open items at the go or hold decision.',fail:'Owners do not update their items.'},
+   {c:'A10',n:'Deliverables and Subtitle Agent',g:'post',t:'hybrid',s:'planned',b:'Post-production & deliverables',after:[],
+    job:'Track deliverables and draft Malayalam-English subtitles for review.',trig:'Locked picture plus buyer specifications.',inp:'Locked picture, buyer specifications, subtitle source.',out:'Deliverables checklist; draft subtitles.',appr:'Post supervisor; the subtitle translator reviews every line.',alone:'Drafts subtitles and tracks deliverables.',metric:'Corrections per reel by the translator.',fail:'Translation misses idiom or dialect.'},
+   {c:'A11',n:'Release Content Agent',g:'release',t:'ai',s:'planned',b:'Release & marketing',after:['M1'],
+    job:'Draft campaign copy from assets that are already approved.',trig:'Approved stills and cuts.',inp:'Approved stills and cuts, release plan, brand notes.',out:'Draft marketing copy and asset variants in Malayalam, English and Manglish.',appr:'Marketing head and Producer approve before anything is published.',alone:'Drafts copy.',metric:'Edits before Marketing head approval.',fail:'Copy overstates the film or breaks a release embargo.'},
+   {c:'M1',n:'Asset and Rights Tracker',g:'release',t:'auto',s:'proposed',b:'Release & marketing',after:[],
+    job:'Record which stills, clips, songs and talent approvals can be used where, and until when.',trig:'A new asset or approval is added.',inp:'Stills, clips, music licences, talent approvals, embargo dates.',out:'An asset register showing what is cleared, for which uses, and any embargo.',appr:'Producer.',alone:'Tracks and flags missing approvals.',metric:'Assets used without a recorded approval: none.',fail:'Approvals given verbally and never recorded.'},
+   {c:'M2',n:'Release Calendar Planner',g:'release',t:'hybrid',s:'proposed',b:'Release & marketing',after:[],
+    job:'Draft a phased release plan for teaser, songs, trailer and release, and check it for clashes.',trig:'Producer sets a target release window.',inp:'Release window, distributor plan, other known releases.',out:'Draft release calendar with clash warnings.',appr:'Producer and distributor.',alone:'Drafts the calendar.',metric:'Share of the draft the producer keeps. To be agreed with a design partner.',fail:'Missing information on other releases.'},
+   {c:'M3',n:'Social Scheduler',g:'release',t:'auto',s:'proposed',b:'Release & marketing',after:['M1','A11'],
+    job:'Queue approved posts across platforms on the agreed calendar.',trig:'Posts approved by the Marketing head.',inp:'Approved copy, cleared assets, release calendar.',out:'A scheduled post queue.',appr:'Marketing head.',alone:'Schedules only posts that are already approved.',metric:'Posts published with the wrong asset or at the wrong time: none.',fail:'A post goes out before an embargo lifts.'},
+   {c:'M4',n:'Trailer and Teaser Brief Agent',g:'release',t:'hybrid',s:'proposed',b:'Release & marketing',after:[],
+    job:'Suggest moments and beats for the editor to consider. It does not cut the trailer.',trig:'Approved cut available.',inp:'Approved cut, script, release plan, spoiler notes.',out:'A brief with suggested moments, beat notes and spoilers to avoid.',appr:'Director and editor.',alone:'Drafts the brief.',metric:'Share of suggestions the editor keeps. To be agreed with an editor.',fail:'Suggestions give away the ending.'},
+   {c:'M5',n:'Audience and Buzz Analyst',g:'release',t:'analysis',s:'proposed',b:'Release & marketing',after:['M3'],
+    job:'Summarize what is landing in public views and comments, with suggestions on where to spend.',trig:'Posts are live.',inp:'Public engagement data and comments from the campaign\'s own channels.',out:'A short report of what is working, with spend suggestions.',appr:'Marketing head.',alone:'Reports only; it never spends.',metric:'To be agreed with a design partner.',fail:'Noisy or manipulated public data.'},
+   {c:'M6',n:'Press and Outreach Drafter',g:'release',t:'ai',s:'proposed',b:'Release & marketing',after:['M1'],
+    job:'Draft the media kit and outreach messages to press and creators. A person sends them.',trig:'Approved facts, stills and synopsis available.',inp:'Approved synopsis, cast and crew facts, cleared stills.',out:'Media kit and outreach drafts.',appr:'Publicist.',alone:'Drafts only; a person sends.',metric:'Edits before the publicist approves.',fail:'A fact in the kit does not match the production record.'}
+  ];
+  function byCode(c){c=c.toUpperCase();for(var i=0;i<AGENTS.length;i++)if(AGENTS[i].c===c)return AGENTS[i];return null;}
+  function grp(s){for(var i=0;i<GROUPS.length;i++)if(GROUPS[i].s===s)return GROUPS[i];return null;}
+  function mk(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e;}
+  function chip(txt,cls){return mk('span','chip'+(cls?' '+cls:''),txt);}
+  function stText(a){return a.st||ST[a.s];}
+  function stCls(a){return a.s==='first'?'first':(a.s==='proposed'?'proposed':'');}
+
+  function agentCard(a){
+    var c=mk('a','card agent');c.href='#agent-'+a.c.toLowerCase();
+    var top=mk('div','top');
+    top.appendChild(mk('span','code',a.c));top.appendChild(chip(T[a.t]));top.appendChild(chip(stText(a),stCls(a)));
+    c.appendChild(top);c.appendChild(mk('h4',null,a.n));c.appendChild(mk('p','muted',a.job));
+    var d=mk('dl');var r=mk('div');r.appendChild(mk('dt',null,'Approved by'));r.appendChild(mk('dd',null,a.appr));d.appendChild(r);c.appendChild(d);
+    return c;
+  }
+  function groupSection(g,list,link){
+    var sec=mk('div','hand');
+    var h3=mk('h3');
+    if(link){var a=mk('a',null,g.n);a.href='#group-'+g.s;h3.appendChild(a);}else h3.appendChild(document.createTextNode(g.n));
+    h3.appendChild(mk('span',null,g.note));sec.appendChild(h3);
+    var grid=mk('div','grid g3');list.forEach(function(x){grid.appendChild(agentCard(x));});sec.appendChild(grid);return sec;
+  }
+  function band(cls){var s=mk('section','band'+(cls?' '+cls:''));var w=mk('div','w');s.appendChild(w);return {s:s,w:w};}
+  function pagehero(){var s=mk('section','pagehero');var w=mk('div','w');var h=mk('div','head');w.appendChild(h);s.appendChild(w);return {s:s,h:h};}
+  function crumbs(items){
+    var c=mk('div','crumbs');
+    items.forEach(function(it,i){
+      if(i)c.appendChild(mk('span',null,'/'));
+      if(it.h){var a=mk('a',null,it.t);a.href=it.h;c.appendChild(a);}else c.appendChild(mk('span',null,it.t));
+    });return c;
+  }
+  var dyn=document.getElementById('pg-dyn');
+  function clearDyn(){while(dyn.firstChild)dyn.removeChild(dyn.firstChild);}
+
+  var hubGroup='all',hubStatus='all';
+  function renderHub(){
+    clearDyn();
+    var ph=pagehero();
+    ph.h.appendChild(mk('p','eyebrow','AI Agents for Film and Entertainment'));
+    ph.h.appendChild(mk('h1',null,'Twenty-one agents. Each drafts. A named person approves.'));
+    ph.h.appendChild(mk('p','lead','Agents for every stage of a film. Each has one job, one trigger and one named approver. We build them one at a time, starting with script breakdown.'));
+    var cta=mk('div','row');var b=mk('a','btn','Deploy Your First Film Agent');b.href='#book-demo';cta.appendChild(b);var bm=mk('a','btn ghost','See the full workflow map');bm.href='#directory';cta.appendChild(bm);ph.h.appendChild(cta);
+    dyn.appendChild(ph.s);
+
+    var bn=band('alt');
+    var note=mk('div','banner');var nb=mk('b',null,'Status, honestly: ');note.appendChild(nb);
+    note.appendChild(document.createTextNode('none of these agents is live. One is being built first, the rest are planned, and the proposed ones have draft specifications that no customer has tested yet.'));
+    bn.w.appendChild(note);
+    dyn.appendChild(bn.s);
+
+    var b2=band();
+    var f=mk('div','filters');f.setAttribute('role','group');f.setAttribute('aria-label','Filter agents');
+    function fb(label,kind,val){var x=mk('button','fbtn',label);x.type='button';
+      var cur=kind==='g'?hubGroup:hubStatus;x.setAttribute('aria-pressed',String(cur===val));
+      x.addEventListener('click',function(){if(kind==='g')hubGroup=val;else hubStatus=val;var y=window.scrollY;renderHub();window.scrollTo(0,y);});
+      return x;}
+    f.appendChild(fb('All groups','g','all'));GROUPS.forEach(function(g){f.appendChild(fb(g.n,'g',g.s));});
+    b2.w.appendChild(f);
+    var f2=mk('div','filters');f2.setAttribute('role','group');f2.setAttribute('aria-label','Filter by status');
+    f2.appendChild(fb('Any status','s','all'));f2.appendChild(fb('First build','s','first'));f2.appendChild(fb('Planned','s','planned'));f2.appendChild(fb('Proposed','s','proposed'));
+    b2.w.appendChild(f2);
+    var shown=0;
+    GROUPS.forEach(function(g){
+      if(hubGroup!=='all'&&hubGroup!==g.s)return;
+      var list=AGENTS.filter(function(a){return a.g===g.s&&(hubStatus==='all'||a.s===hubStatus);});
+      if(!list.length)return;shown+=list.length;
+      b2.w.appendChild(groupSection(g,list,true));
+    });
+    if(!shown)b2.w.appendChild(mk('p','muted','No agents match those filters.'));
+    dyn.appendChild(b2.s);
+  }
+  function renderGroup(slug){
+    var g=grp(slug);if(!g){renderHub();return;}
+    clearDyn();
+    var ph=pagehero();
+    ph.h.appendChild(crumbs([{t:'AI Agents',h:'#ai-agents'},{t:g.n}]));
+    ph.h.appendChild(mk('h1',null,g.n));
+    ph.h.appendChild(mk('p','lead',g.intro));
+    dyn.appendChild(ph.s);
+    var b=band();
+    var grid=mk('div','grid g3');AGENTS.filter(function(a){return a.g===slug;}).forEach(function(a){grid.appendChild(agentCard(a));});
+    b.w.appendChild(grid);
+    var cta=mk('div','row');cta.style.marginTop='28px';var x=mk('a','btn','Deploy Your First Film Agent');x.href='#book-demo';cta.appendChild(x);b.w.appendChild(cta);
+    dyn.appendChild(b.s);
+  }
+  function renderAgent(code){
+    var a=byCode(code);if(!a){renderHub();return;}
+    clearDyn();var g=grp(a.g);
+    var ph=pagehero();
+    ph.h.appendChild(crumbs([{t:'AI Agents',h:'#ai-agents'},{t:g.n,h:'#group-'+g.s},{t:a.c+' '+a.n}]));
+    var chips=mk('div','row');chips.style.gap='8px';chips.appendChild(mk('span','chip',a.c));chips.appendChild(chip(T[a.t]));chips.appendChild(chip(stText(a),stCls(a)));ph.h.appendChild(chips);
+    ph.h.appendChild(mk('h1',null,a.n));
+    ph.h.appendChild(mk('p','lead',a.job));
+    var cta=mk('div','row');var bb=mk('a','btn','Request This Agent in a Demo');bb.href='#book-demo';bb.setAttribute('data-b',a.b);cta.appendChild(bb);ph.h.appendChild(cta);
+    dyn.appendChild(ph.s);
+
+    var b=band();
+    if(a.s==='proposed'){var ban=mk('div','banner');ban.appendChild(mk('b',null,'Proposed agent: '));ban.appendChild(document.createTextNode('this specification is a draft. No customer has tested it yet, and it will change after the first conversations.'));ban.style.marginBottom='24px';b.w.appendChild(ban);}
+    var st=mk('div','steps4');
+    [['Trigger',a.trig,false],['Reads',a.inp,false],['Drafts',a.out,false],['Approved by',a.appr,true]].forEach(function(x){
+      var d=mk('div',x[2]?'hl':'');d.appendChild(mk('div','k',x[0]));d.appendChild(mk('p',null,x[1]));st.appendChild(d);});
+    b.w.appendChild(st);
+    var two=mk('div','grid g2');two.style.marginTop='24px';
+    var c1=mk('div','card');var dl=mk('dl','facts');
+    [['On its own',a.alone],['Success metric',a.metric],['Known failure modes',a.fail]].forEach(function(x){var r=mk('div');r.appendChild(mk('dt',null,x[0]));r.appendChild(mk('dd',null,x[1]));dl.appendChild(r);});
+    c1.appendChild(dl);two.appendChild(c1);
+    var c2=mk('div','card');c2.appendChild(mk('h3',null,'Receives from'));
+    if(a.after.length){var ul=mk('ul','links2');a.after.forEach(function(k){var o=byCode(k);if(!o)return;var li=mk('li');var l=mk('a');l.href='#agent-'+k.toLowerCase();l.appendChild(mk('span','c',o.c));l.appendChild(document.createTextNode(o.n));li.appendChild(l);ul.appendChild(li);});c2.appendChild(ul);}
+    else c2.appendChild(mk('p','muted','Starts from your own input, with no other agent upstream.'));
+    var down=AGENTS.filter(function(o){return o.after.indexOf(a.c)>-1;});
+    if(down.length){c2.appendChild(mk('h3',null,'Feeds into'));var ul2=mk('ul','links2');down.forEach(function(o){var li=mk('li');var l=mk('a');l.href='#agent-'+o.c.toLowerCase();l.appendChild(mk('span','c',o.c));l.appendChild(document.createTextNode(o.n));li.appendChild(l);ul2.appendChild(li);});c2.appendChild(ul2);}
+    var tf=tasksFor(a.c);
+    if(tf.length){c2.appendChild(mk('h3',null,'Film steps it covers'));var ul3=mk('ul','links2');tf.forEach(function(x){var li=mk('li');var l=mk('a');l.href='#directory';l.appendChild(mk('span','c',String(x.i+1).padStart(2,'0')));l.appendChild(document.createTextNode(x.t.n));li.appendChild(l);ul3.appendChild(li);});c2.appendChild(ul3);}
+    two.appendChild(c2);b.w.appendChild(two);
+    var res=mk('div','phbox');res.style.marginTop='18px';res.appendChild(mk('strong',null,'Result'));res.appendChild(document.createTextNode('Blank until a real pilot produces one. Nothing here is a benchmark.'));b.w.appendChild(res);
+    dyn.appendChild(b.s);
+  }
+
+  /* home group cards */
+  var hg=document.getElementById('homeGroups');
+  GROUPS.forEach(function(g){
+    var n=AGENTS.filter(function(a){return a.g===g.s;});
+    var c=mk('a','card');c.href='#group-'+g.s;
+    c.appendChild(mk('p','tagline',n.length+(n.length===1?' agent':' agents')));
+    c.appendChild(mk('h3',null,g.n));c.appendChild(mk('p','muted',g.note+'.'));
+    c.appendChild(mk('span','more','See the group →'));hg.appendChild(c);
+  });
+  /* solutions lists */
+  document.querySelectorAll('[data-agents]').forEach(function(ul){
+    ul.getAttribute('data-agents').split(',').forEach(function(k){
+      var o=byCode(k);if(!o)return;var li=mk('li');var l=mk('a');l.href='#agent-'+k.toLowerCase();
+      l.appendChild(mk('span','c',o.c));l.appendChild(document.createTextNode(o.n+' · '+stText(o)));li.appendChild(l);ul.appendChild(li);
+    });
+  });
+
+  /* ---------- Agent Directory: every step of a film, mapped ---------- */
+  var DPH=[
+    {k:'dev',n:'Development',note:'From idea to a script worth making'},
+    {k:'fin',n:'Financing and packaging',note:'Money and people'},
+    {k:'pre',n:'Pre-production',note:'Breakdown, plan and budget'},
+    {k:'prep',n:'Pre-shoot',note:'Get ready to roll'},
+    {k:'shoot',n:'Shoot',note:'Every day on set'},
+    {k:'post',n:'Post-production',note:'Finish and deliver'},
+    {k:'rel',n:'Release and marketing',note:'Get it seen, safely'}
+  ];
+  var DROLES=['Writer','Director','Producer','First AD','Production team','Department heads','Casting','Post','Marketing'];
+  var TASKS=[
+   {p:'dev',n:'Develop the idea into a treatment',d:'Take a core idea through staged development, with the writer approving each stage.',o:'Writer',r:['Writer'],a:['C1']},
+   {p:'dev',n:'Write the screenplay',d:'Draft scenes and dialogue stage by stage. The writer keeps or discards every draft.',o:'Writer, Director',r:['Writer','Director'],a:['C1']},
+   {p:'dev',n:'Build the visual pitch bible',d:'Assemble look, tone and reference material for the pitch.',o:'Writer, Director',r:['Writer','Director'],a:['C1']},
+   {p:'dev',n:'Script review and rewrite plan',d:'An experienced script doctor reviews structure, character and pacing and writes a rewrite plan.',o:'Writer, script doctor',r:['Writer'],a:[],sv:'services'},
+   {p:'dev',n:'Creative alignment',d:'The director shares the look book, tone and non-negotiables with the department heads.',o:'Director, Producer',r:['Director','Producer','Department heads'],a:[]},
+   {p:'dev',n:'Script lock and rights check',d:'Freeze a numbered locking draft and confirm writer agreements and story or music rights.',o:'Producer, Legal',r:['Producer','Writer'],a:[]},
+   {p:'fin',n:'Assemble the investor-ready package',d:'Compile breakdown, schedule, budget draft and synopsis from approved documents only.',o:'Producer',r:['Producer'],a:['N1']},
+   {p:'fin',n:'Introductions to investors',d:'A person introduces a prepared package to investors who have opted in. Legal advice needed before this is offered.',o:'Producer, FilmCrab team',r:['Producer'],a:[],sv:'network'},
+   {p:'fin',n:'Shortlist cast and crew',d:'Draft a shortlist against the producer\'s brief, with reasons and availability notes. Consented profiles only.',o:'Producer, Casting director',r:['Producer','Casting'],a:['T1']},
+   {p:'pre',n:'Script breakdown',d:'Split the locked script into scenes and tag every element by department.',o:'First AD, Script Supervisor',r:['First AD','Production team'],a:['A1']},
+   {p:'pre',n:'Creative priority pass',d:'Mark each scene Hero, Standard or Fast so schedule time follows story importance.',o:'Director, DOP',r:['Director','Department heads'],a:[]},
+   {p:'pre',n:'Department packets',d:'Give each department only its scenes and elements.',o:'Production Coordinator',r:['Production team','Department heads'],a:['A5']},
+   {p:'pre',n:'Makeup, hair and prosthetics looks',d:'Draft look sheets and continuity notes per character.',o:'Makeup department head',r:['Department heads'],a:['C2']},
+   {p:'pre',n:'Other department prep',d:'Art, costume, camera, locations, stunts and sound plan from their packets. The design work is human; the agent supplies the packet only.',o:'Department heads',r:['Department heads'],a:['A5']},
+   {p:'pre',n:'Budget',d:'Draft a budget by department from the breakdown. Planned only if demand is confirmed.',o:'Production Controller, Producer',r:['Producer','Production team'],a:['A6']},
+   {p:'pre',n:'Schedule (stripboard)',d:'Draft a shooting schedule and show the reason for every grouping.',o:'First AD, Production Manager',r:['First AD','Production team'],a:['A3']},
+   {p:'pre',n:'Revision control',d:'Show what each script revision changes, which departments and which days.',o:'Script Supervisor, Production Coordinator',r:['Production team','First AD','Writer'],a:['A2']},
+   {p:'prep',n:'Table read and rehearsal',d:'Read the script aloud and rehearse Hero scenes. Changes go to revision control.',o:'Director, cast',r:['Director','Writer'],a:[]},
+   {p:'prep',n:'Tech recce',d:'Department heads walk each key location. Track the open items to closure.',o:'All department heads',r:['Department heads','Production team'],a:['A9']},
+   {p:'prep',n:'Final readiness: go or hold',d:'Permits, insurance, contracts, transport and medical plan checked; the producer signs go or hold.',o:'Producer',r:['Producer','Production team'],a:['A9']},
+   {p:'shoot',n:'Call sheet',d:'Fill the call sheet from the approved schedule day.',o:'First AD',r:['First AD','Production team'],a:['A4']},
+   {p:'shoot',n:'Shoot, continuity and backups',d:'Capture, log takes and continuity, and back up footage twice in two places.',o:'First AD, Script Supervisor, DIT',r:['First AD','Department heads'],a:[]},
+   {p:'shoot',n:'Daily production report',d:'Draft the report from the day\'s logs for sign-off.',o:'Production Manager, First AD',r:['Production team','First AD'],a:['A8']},
+   {p:'shoot',n:'Weekly cost and schedule checkpoint',d:'Compare actual against planned scenes, days and spend, and flag breaches of tolerance.',o:'Production Controller, Producer',r:['Producer','Production team'],a:['A7']},
+   {p:'shoot',n:'Production unit support',d:'Hands-on coordination and reporting support for a shoot. Delivery details still to be confirmed.',o:'FilmCrab team',r:['Production team','Producer'],a:[],sv:'services'},
+   {p:'post',n:'Edit',d:'Assembly cut, director\'s cut and locked picture.',o:'Editor, Director',r:['Director','Post'],a:[]},
+   {p:'post',n:'Sound and music',d:'Dialogue edit, ADR, Foley, score and final mix.',o:'Sound and music teams',r:['Post','Director'],a:[]},
+   {p:'post',n:'Visual finishing',d:'VFX from a locked shot list, then the colour grade.',o:'VFX and colour teams',r:['Post','Director'],a:[]},
+   {p:'post',n:'Subtitles (Malayalam and English)',d:'Draft subtitles for a translator to review line by line.',o:'Post supervisor, subtitle translator',r:['Post'],a:['A10']},
+   {p:'post',n:'Deliverables and censor',d:'A deliverables checklist per buyer, the censor submission, and the masters.',o:'Post supervisor',r:['Post','Producer'],a:['A10']},
+   {p:'rel',n:'Asset and rights register',d:'Record which stills, clips, songs and approvals are cleared, for which uses, until when.',o:'Producer',r:['Producer','Marketing'],a:['M1']},
+   {p:'rel',n:'Release calendar',d:'Plan teaser, songs, trailer and release, and check the plan for clashes.',o:'Producer, distributor',r:['Producer','Marketing'],a:['M2']},
+   {p:'rel',n:'Trailer and teaser brief',d:'Suggest moments and beats for the editor. The agent does not cut the trailer.',o:'Director, editor',r:['Director','Marketing','Post'],a:['M4']},
+   {p:'rel',n:'Campaign copy',d:'Draft copy and asset variants in Malayalam, English and Manglish from approved assets.',o:'Marketing head, Producer',r:['Marketing','Producer'],a:['A11']},
+   {p:'rel',n:'Press kit and outreach',d:'Draft the media kit and messages to press and creators. A person sends them.',o:'Publicist',r:['Marketing'],a:['M6']},
+   {p:'rel',n:'Social scheduling',d:'Queue only posts that are already approved, on the agreed calendar.',o:'Marketing head',r:['Marketing'],a:['M3']},
+   {p:'rel',n:'Audience and buzz report',d:'Summarize what is landing in public views and comments, with spend suggestions. It never spends.',o:'Marketing head',r:['Marketing'],a:['M5']},
+   {p:'rel',n:'Distributor and exhibitor coordination',d:'Agree dates, screens and terms with distributors and exhibitors.',o:'Producer, Marketing head',r:['Producer','Marketing'],a:[]},
+   {p:'rel',n:'Post-release wrap report',d:'Record what worked, what cost more than planned, and what to change next time.',o:'Producer',r:['Producer'],a:[]}
+  ];
+  function tasksFor(code){var o=[];TASKS.forEach(function(t,i){if(t.a.indexOf(code)>-1)o.push({t:t,i:i});});return o;}
+  var dRole='all',dMode='all',dPhase='all',dQ='';
+  function dMatch(t){
+    var mode=t.a.length?'agent':(t.sv?'svc':'human');
+    if(dPhase!=='all'&&t.p!==dPhase)return false;
+    if(dRole!=='all'&&t.r.indexOf(dRole)<0)return false;
+    if(dMode!=='all'&&dMode!==mode)return false;
+    if(dQ){var hay=(t.n+' '+t.d+' '+t.o+' '+t.a.join(' ')).toLowerCase();if(hay.indexOf(dQ)<0)return false;}
+    return true;
+  }
+  function renderDir(){
+    clearDyn();
+    var ph=pagehero();
+    ph.h.appendChild(crumbs([{t:'AI Agents',h:'#ai-agents'},{t:'Agent Directory'}]));
+    ph.h.appendChild(mk('p','eyebrow','Agent Directory'));
+    ph.h.appendChild(mk('h1',null,'Every step of a film, and the agent that helps with it.'));
+    ph.h.appendChild(mk('p','lead','Follow a film from idea to release. For each step, see who owns it, which FilmCrab agent drafts it, and which steps stay with people. Writers, directors and producers can filter by role.'));
+    var cta=mk('div','row');var b1=mk('a','btn','Request an Agent in a Demo');b1.href='#book-demo';cta.appendChild(b1);
+    var b2=mk('a','btn ghost','Browse by group');b2.href='#ai-agents';cta.appendChild(b2);ph.h.appendChild(cta);
+    dyn.appendChild(ph.s);
+
+    var bd=band('alt');
+    var nb=mk('div','banner');nb.appendChild(mk('b',null,'Status, honestly: '));
+    nb.appendChild(document.createTextNode('none of these agents is live. One is being built first, the rest are planned or proposed. Steps marked human-led are not planned for an agent, and they stay with the people who do them.'));
+    bd.w.appendChild(nb);dyn.appendChild(bd.s);
+
+    var b=band();
+    var nAg=TASKS.filter(function(t){return t.a.length;}).length,nSv=TASKS.filter(function(t){return !t.a.length&&t.sv;}).length,nHu=TASKS.length-nAg-nSv;
+    var st=mk('div','dstats');
+    [[TASKS.length,'steps mapped'],[nAg,'with an agent drafting'],[nHu,'human-led, no agent planned'],[nSv,'covered by a FilmCrab service'],[0,'agents live today']].forEach(function(x){
+      var d=mk('div','dstat');d.appendChild(mk('b',null,String(x[0])));d.appendChild(mk('span',null,x[1]));st.appendChild(d);});
+    b.w.appendChild(st);
+
+    var tools=mk('div','dtools');
+    var r2=mk('div','row2');
+    var sw=mk('div');var sl=mk('label',null,'Search steps');sl.setAttribute('for','dq');var si=mk('input');si.id='dq';si.type='search';si.placeholder='e.g. budget, subtitles, press';si.value=dQ;sw.appendChild(sl);sw.appendChild(si);r2.appendChild(sw);
+    var rw=mk('div');var rl=mk('label',null,'I am a');rl.setAttribute('for','drole');var rs=mk('select');rs.id='drole';
+    var o0=mk('option',null,'Everyone');o0.value='all';rs.appendChild(o0);
+    DROLES.forEach(function(r){var o=mk('option',null,r);o.value=r;rs.appendChild(o);});rs.value=dRole;
+    rw.appendChild(rl);rw.appendChild(rs);r2.appendChild(rw);tools.appendChild(r2);
+
+    var fp=mk('div','filters');fp.style.marginBottom='0';fp.setAttribute('role','group');fp.setAttribute('aria-label','Filter by phase');
+    var fm=mk('div','filters');fm.style.marginBottom='0';fm.setAttribute('role','group');fm.setAttribute('aria-label','Filter by who does the work');
+    var btns=[];
+    function mkb(par,label,kind,val){var x=mk('button','fbtn',label);x.type='button';x.dataset.k=kind;x.dataset.v=val;
+      x.addEventListener('click',function(){if(kind==='p')dPhase=val;else dMode=val;sync();paint();});par.appendChild(x);btns.push(x);}
+    mkb(fp,'All phases','p','all');DPH.forEach(function(q){mkb(fp,q.n,'p',q.k);});
+    mkb(fm,'Any kind of work','m','all');mkb(fm,'Agent drafts','m','agent');mkb(fm,'Human-led','m','human');mkb(fm,'FilmCrab service','m','svc');
+    function sync(){btns.forEach(function(x){var cur=x.dataset.k==='p'?dPhase:dMode;x.setAttribute('aria-pressed',String(cur===x.dataset.v));});}
+    sync();
+    tools.appendChild(fp);tools.appendChild(fm);b.w.appendChild(tools);
+    var out=mk('div');out.id='dout';b.w.appendChild(out);
+    var fin=mk('div','row');fin.style.marginTop='36px';
+    var fb=mk('a','btn','Tell us which step costs you most');fb.href='#book-demo';fb.setAttribute('data-b','Custom software or automation setup');fin.appendChild(fb);b.w.appendChild(fin);
+    dyn.appendChild(b.s);
+
+    si.addEventListener('input',function(){dQ=si.value.trim().toLowerCase();paint();});
+    rs.addEventListener('change',function(){dRole=rs.value;paint();});
+    function paint(){
+      while(out.firstChild)out.removeChild(out.firstChild);
+      var shown=0;
+      DPH.forEach(function(q){
+        var list=[];TASKS.forEach(function(t,i){if(t.p===q.k&&dMatch(t))list.push({t:t,i:i});});
+        if(!list.length)return;shown+=list.length;
+        var sec=mk('div','dphase');var h=mk('h3',null,q.n);h.appendChild(mk('span',null,q.note+' · '+list.length+(list.length===1?' step':' steps')));sec.appendChild(h);
+        list.forEach(function(x){
+          var t=x.t,row=mk('div','drow');
+          row.appendChild(mk('div','tn',String(x.i+1).padStart(2,'0')));
+          var mid=mk('div');mid.appendChild(mk('h4',null,t.n));mid.appendChild(mk('p','d',t.d));mid.appendChild(mk('p','own','Owner: '+t.o));row.appendChild(mid);
+          var ag=mk('div','dag');
+          if(t.a.length){t.a.forEach(function(k){var o=byCode(k);if(!o)return;var a=mk('a','achip '+stCls(o));a.href='#agent-'+k.toLowerCase();a.appendChild(mk('b',null,o.c));a.appendChild(document.createTextNode(o.n));a.appendChild(mk('small',null,stText(o)));ag.appendChild(a);});}
+          else if(t.sv){var a2=mk('a','achip');a2.href='#'+t.sv;a2.appendChild(mk('b',null,'SVC'));a2.appendChild(document.createTextNode(t.sv==='network'?'Producer Network':'Production Services'));ag.appendChild(a2);}
+          else ag.appendChild(mk('div','nohand','Human-led. No agent planned.'));
+          row.appendChild(ag);sec.appendChild(row);
+        });
+        out.appendChild(sec);
+      });
+      if(!shown)out.appendChild(mk('p','muted','No steps match those filters.'));
+    }
+    paint();
+  }
+
+  /* routing */
+  function show(page,navKey){
+    current=page;
+    STATIC.forEach(function(k){document.getElementById(PAGE_EL[k]).hidden=(k!==page);});
+    dyn.hidden=(page!=='dyn');
+    document.querySelectorAll('[data-nav]').forEach(function(a){
+      if(a.dataset.nav===navKey)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
+  }
+  function route(){
+    var h=decodeURIComponent(location.hash.slice(1)).toLowerCase();
+    var anchor=null;
+    if(STATIC.indexOf(h)>-1){show(h,h);}
+    else if(h==='ai-agents'){renderHub();show('dyn','ai-agents');}
+    else if(h==='directory'){renderDir();show('dyn','ai-agents');}
+    else if(h.indexOf('group-')===0){renderGroup(h.slice(6));show('dyn','ai-agents');}
+    else if(h.indexOf('agent-')===0){renderAgent(h.slice(6));show('dyn','ai-agents');}
+    else if(h){
+      var t=document.getElementById(h);
+      if(t){var pg=t.closest('[data-page]');var p=pg?pg.dataset.page:current;show(p,p);anchor=t;}
+      else show('home','home');
+    } else show('home','home');
+    if(anchor)anchor.scrollIntoView();else window.scrollTo(0,0);
+  }
+  window.addEventListener('hashchange',route);
+
+  /* a call to action can pre-select the bottleneck */
+  document.addEventListener('click',function(ev){
+    var a=ev.target.closest&&ev.target.closest('a[data-b]');if(!a)return;
+    var sel=document.querySelector('#demoForm select');if(!sel)return;
+    var v=a.getAttribute('data-b');
+    for(var i=0;i<sel.options.length;i++){if(sel.options[i].text===v||sel.options[i].value===v){sel.selectedIndex=i;break;}}
+  });
+
+  /* hero mock */
+  var mb=document.getElementById('mockBtn'),mm=document.getElementById('mockMsg'),approved=false;
+  mb.addEventListener('click',function(){
+    approved=!approved;
+    if(approved){mm.textContent='Approved by First AD (demo). Only now can scheduling and budget agents use this scene.';mb.textContent='Undo approval';mb.className='btn sm ghost';}
+    else{mm.textContent='Draft only. Nothing moves to scheduling or budget until a First AD approves.';mb.textContent='Approve as First AD';mb.className='btn sm';}
+  });
+
+  /* demo form */
+  var form=document.getElementById('demoForm'),res=document.getElementById('demoResult'),brief=document.getElementById('brief');
+  var emailRe=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  function setErr(n,m){var e=form.querySelector('[data-for="'+n+'"]');if(e)e.textContent=m||'';}
+  form.addEventListener('submit',function(ev){
+    ev.preventDefault();
+    var f=form.elements,ok=true;
+    var v={name:f.name.value.trim(),company:f.company.value.trim(),bottleneck:f.bottleneck.value,email:f.email.value.trim()};
+    ['name','company','bottleneck','email'].forEach(function(k){setErr(k,'');});
+    if(!v.name){setErr('name','Please add your name.');ok=false;}
+    if(!v.company){setErr('company','Please add your studio or company.');ok=false;}
+    if(!v.bottleneck){setErr('bottleneck','Choose the closest bottleneck.');ok=false;}
+    if(!emailRe.test(v.email)){setErr('email','Enter a valid email address.');ok=false;}
+    if(!ok)return;
+    brief.textContent='FilmCrab demo request\nName: '+v.name+'\nStudio/company: '+v.company+'\nPrimary bottleneck: '+v.bottleneck+'\nEmail: '+v.email;
+    form.hidden=true;res.hidden=false;
+  });
+  document.getElementById('editBrief').addEventListener('click',function(){res.hidden=true;form.hidden=false;});
+  document.getElementById('copyBrief').addEventListener('click',function(){
+    var b=this,txt=brief.textContent;
+    function done(m){var o=b.textContent;b.textContent=m;setTimeout(function(){b.textContent=o;},1800);}
+    function sel(){var r=document.createRange();r.selectNodeContents(brief);var s=getSelection();s.removeAllRanges();s.addRange(r);done('Select and copy');}
+    try{navigator.clipboard.writeText(txt).then(function(){done('Copied');},sel);}catch(e){sel();}
+  });
+
+  var st=document.getElementById('sticky');
+  if('IntersectionObserver' in window){new IntersectionObserver(function(es){st.hidden=es[0].isIntersecting;},{threshold:0.05}).observe(document.getElementById('book-demo'));}
+
+  route();
+})();
+</script>
+</body>
+</html>
