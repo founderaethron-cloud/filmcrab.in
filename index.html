@@ -104,6 +104,29 @@ header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;backgroun
 .mock-foot{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding:12px 18px;border-top:1px solid var(--line);background:var(--surface2)}
 .mock-foot p{font-size:.84rem;color:var(--muted);flex:1 1 200px}
 .cap{font-size:.78rem;color:var(--muted);margin-top:10px}
+/* hero journey */
+.jny{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 12px 10px;box-shadow:0 18px 50px rgba(0,0,0,.18);min-width:0}
+.jny svg{display:block;width:100%;height:auto;overflow:visible}
+.jny .track{fill:none;stroke:var(--line);stroke-width:3;stroke-dasharray:2 9;stroke-linecap:round}
+.jny .prog{fill:none;stroke:var(--accent);stroke-width:3.5;stroke-linecap:round}
+.jny .nd circle.ring{fill:var(--bg);stroke:var(--line);stroke-width:2.5;transition:stroke .35s,fill .35s}
+.jny .nd .ic{fill:none;stroke:var(--muted);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:stroke .35s}
+.jny .nd text{font-family:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;fill:var(--muted);transition:fill .35s}
+.jny .nd .t1{font-size:15px;letter-spacing:.1em;font-weight:600}
+.jny .nd .t2{font-size:12.5px}
+.jny .nd.now circle.ring{stroke:var(--accent);fill:var(--glow)}
+.jny .nd.now .ic,.jny .nd.now .t1{stroke:var(--accent);fill:var(--accent)}
+.jny .nd.now .ic{fill:none}
+.jny .nd.now .t1{stroke:none}
+.jny .nd.done circle.ring{stroke:var(--ok)}
+.jny .nd.done .ic{stroke:var(--ok)}
+.jny .nd.done .t1{fill:var(--fg)}
+.jny .frame rect.fr{fill:var(--bg);stroke:var(--accent);stroke-width:2.5}
+.jny .frame .sp{fill:var(--accent)}
+.jny .stat{margin-top:6px;padding:10px 6px 2px;border-top:1px solid var(--line);font-size:.84rem;color:var(--muted);min-height:3.1em;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.jny .stat b{color:var(--fg);font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.76rem;letter-spacing:.1em;text-transform:uppercase}
+@media (max-width:560px){.jny .nd .t2{display:none}.jny .nd .t1{font-size:17px}}
+
 
 .proof{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);border-radius:10px;background:var(--surface);overflow:hidden}
 .proof>div{padding:18px 20px;border-right:1px solid var(--line);min-width:0}
@@ -270,24 +293,8 @@ a.achip.proposed{border-style:dashed}
           </div>
         </div>
         <div>
-          <div class="mock" role="group" aria-label="Illustrative script breakdown review">
-            <div class="mock-bar mono"><span>Script breakdown &middot; draft</span><span class="chip">Illustrative scene</span></div>
-            <div class="script">
-              <b>14. EXT. BACKWATER JETTY &mdash; DAWN</b>
-              Mist on the water. <mark>MEERA</mark>, drenched, hauls a <mark>country boat</mark> to the jetty while <mark>APPU</mark> counts the <mark>nets</mark>. A distant <mark>engine</mark> coughs. <mark>Crows</mark> scatter.
-            </div>
-            <div class="elements">
-              <div class="erow"><span class="dept">Cast</span><span class="chip">Meera</span><span class="chip">Appu</span></div>
-              <div class="erow"><span class="dept">Art</span><span class="chip">Country boat</span><span class="chip">Fishing nets</span></div>
-              <div class="erow"><span class="dept">Costume</span><span class="chip flag">Wet saree &middot; inferred, please check</span></div>
-              <div class="erow"><span class="dept">Sound</span><span class="chip">Boat engine</span><span class="chip">Crows</span></div>
-            </div>
-            <div class="mock-foot">
-              <p id="mockMsg">Draft only. Nothing moves to scheduling or budget until a First AD approves.</p>
-              <button class="btn sm" id="mockBtn" type="button">Approve as First AD</button>
-            </div>
-          </div>
-          <p class="cap">Invented scene, for illustration. Press the button: this is the rule every FilmCrab agent lives by.</p>
+          <figure class="jny" id="journey" role="img" aria-label="Illustration: a film travels from idea to script, plan, shoot, post, release and screen. At every stage an agent drafts and a named person approves before it moves on."></figure>
+          <p class="cap">One film, idea to screen. Illustration of the FilmCrab workflow: no agent is live yet, and each stage waits for a named approver.</p>
         </div>
       </div>
       <div class="proof" style="margin-top:44px">
@@ -985,13 +992,76 @@ a.achip.proposed{border-style:dashed}
     for(var i=0;i<sel.options.length;i++){if(sel.options[i].text===v||sel.options[i].value===v){sel.selectedIndex=i;break;}}
   });
 
-  /* hero mock */
-  var mb=document.getElementById('mockBtn'),mm=document.getElementById('mockMsg'),approved=false;
-  mb.addEventListener('click',function(){
-    approved=!approved;
-    if(approved){mm.textContent='Approved by First AD (demo). Only now can scheduling and budget agents use this scene.';mb.textContent='Undo approval';mb.className='btn sm ghost';}
-    else{mm.textContent='Draft only. Nothing moves to scheduling or budget until a First AD approves.';mb.textContent='Approve as First AD';mb.className='btn sm';}
-  });
+  /* hero journey */
+  (function(){
+    var host=document.getElementById('journey');if(!host)return;
+    var NS='http://www.w3.org/2000/svg';
+    function el(n,at,par){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);if(par)par.appendChild(e);return e;}
+    var ST=[
+      {x:90,y:70,l:'IDEA',s:'Pitch and bible',who:'the writer',d:'Idea shaped into a pitch'},
+      {x:310,y:70,l:'SCRIPT',s:'Breakdown',who:'the First AD',d:'Script broken into elements'},
+      {x:530,y:70,l:'PLAN',s:'Schedule and budget',who:'the producer',d:'Schedule and budget drafted'},
+      {x:530,y:200,l:'SHOOT',s:'Call sheets and reports',who:'the production manager',d:'Call sheets and daily reports drafted'},
+      {x:310,y:200,l:'POST',s:'Tracking and subtitles',who:'the post supervisor',d:'Post tracking and subtitles drafted'},
+      {x:90,y:200,l:'RELEASE',s:'Campaign and rights',who:'the marketing head',d:'Campaign and rights checks drafted'},
+      {x:530,y:330,l:'SCREEN',s:'Your audience',who:'',d:''}
+    ];
+    var svg=el('svg',{viewBox:'0 0 620 410','aria-hidden':'true',focusable:'false'},host);
+    var D='M90,70 H530 C610,70 610,200 530,200 H90 C10,200 10,330 90,330 H530';
+    var track=el('path',{d:D,'class':'track'},svg);
+    var prog=el('path',{d:D,'class':'prog'},svg);
+    var total=track.getTotalLength();prog.style.strokeDasharray=total;prog.style.strokeDashoffset=total;
+    var ICON=[
+      'M0,-11 a8,8 0 1,1 0.01,0 M-4,8 h8 M-3,13 h6',
+      'M-9,-12 h14 l5,5 v19 h-19 z M-5,-2 h11 M-5,4 h11',
+      'M-12,-10 h24 v22 h-24 z M-12,-3 h24 M-4,-12 v-3 M4,-12 v-3 M-6,4 h4 M2,4 h4',
+      'M-12,-6 h17 v14 h-17 z M5,-1 l9,-5 v14 l-9,-5',
+      'M-12,-8 h8 M-12,0 h24 M-12,8 h14 M-4,-12 v8 M4,-4 v8 M2,4 v8',
+      'M-10,-3 l16,-9 v22 l-16,-9 z M-10,-3 h-4 v6 h4 M-5,7 l2,8',
+      'M-14,-11 h28 v18 h-28 z M-4,-5 l9,5 l-9,5 z M-6,13 h12'
+    ];
+    var nodes=ST.map(function(n,i){
+      var g=el('g',{'class':'nd',transform:'translate('+n.x+','+n.y+')'},svg);
+      el('circle',{'class':'ring',r:32},g);
+      var ic=el('g',{transform:'scale(1.05)'},g);el('path',{'class':'ic',d:ICON[i]},ic);
+      var t1=el('text',{'class':'t1','text-anchor':'middle',y:58},g);t1.textContent='0'+(i+1)+' '+n.l;
+      var t2=el('text',{'class':'t2','text-anchor':'middle',y:77},g);t2.textContent=n.s;
+      return g;
+    });
+    var len=ST.map(function(n){var best=0,bd=1e9;for(var i=0;i<=900;i++){var q=track.getPointAtLength(total*i/900),dx=q.x-n.x,dy=q.y-n.y,dd=dx*dx+dy*dy;if(dd<bd){bd=dd;best=total*i/900;}}return best;});
+    var frame=el('g',{'class':'frame'},svg);
+    el('rect',{'class':'fr',x:-19,y:-13,width:38,height:26,rx:4},frame);
+    [-14,-5,4,13].forEach(function(x){el('rect',{'class':'sp',x:x-1.5,y:-11,width:3,height:3,rx:.6},frame);el('rect',{'class':'sp',x:x-1.5,y:8,width:3,height:3,rx:.6},frame);});
+    el('path',{d:'M-4,-4 l8,4 l-8,4 z',fill:'currentColor','class':'sp'},frame);
+    var stat=document.createElement('div');stat.className='stat';stat.setAttribute('aria-hidden','true');host.appendChild(stat);
+    function setStat(i){
+      stat.textContent='';var b=document.createElement('b');var sp=document.createElement('span');
+      if(i>=ST.length-1){b.textContent='07 Screen';sp.textContent='Every stage approved by a named person. The film is yours.';}
+      else{b.textContent='0'+(i+1)+' '+ST[i].l.charAt(0)+ST[i].l.slice(1).toLowerCase();sp.textContent=ST[i].d+'. Moves on only when '+ST[i].who+' approves.';}
+      stat.appendChild(b);stat.appendChild(sp);
+    }
+    function place(L){var q=track.getPointAtLength(Math.max(0,Math.min(total,L)));frame.setAttribute('transform','translate('+q.x+','+q.y+')');prog.style.strokeDashoffset=total-L;}
+    function mark(cur,upto){nodes.forEach(function(g,i){g.setAttribute('class','nd'+(i===cur?' now':(i<upto?' done':'')));});}
+    var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduce){place(total);mark(ST.length-1,ST.length-1);setStat(ST.length-1);return;}
+    var TRAVEL=1500,DWELL=1100,LAST=3200,seg=ST.length-1,CYCLE=seg*(TRAVEL+DWELL)+LAST,t0=null,lastI=-1;
+    function ease(x){return x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2;}
+    function tick(ts){
+      if(t0===null)t0=ts;var t=(ts-t0)%CYCLE,i=0,L,cur;
+      var per=TRAVEL+DWELL;
+      if(t>=seg*per){L=len[seg];cur=seg;}
+      else{i=Math.floor(t/per);var r=t-i*per;
+        if(r<DWELL){L=len[i];cur=i;}
+        else{var k=ease((r-DWELL)/TRAVEL);L=len[i]+(len[i+1]-len[i])*k;cur=-1;}
+      }
+      place(L);
+      var shown=cur>=0?cur:i;var key=cur+':'+shown;
+      if(key!==lastI){lastI=key;mark(cur,cur>=0?cur:i+1);setStat(cur>=0?cur:i);}
+      requestAnimationFrame(tick);
+    }
+    place(0);mark(0,0);setStat(0);
+    var vis=!document.hidden;requestAnimationFrame(tick);
+  })();
 
   /* demo form */
   var form=document.getElementById('demoForm'),res=document.getElementById('demoResult'),brief=document.getElementById('brief');
