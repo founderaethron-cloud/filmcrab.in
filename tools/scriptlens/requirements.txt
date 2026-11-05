@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+python-multipart
+pdfplumber
+pypdfium2
+python-docx
+anthropic
+pytest
+reportlab

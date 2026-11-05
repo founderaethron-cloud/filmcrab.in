@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ScriptLens</title>
+<style>
+:root{
+  --bg:#f6f1e7; --card:#fffdf8; --ink:#1d1b16; --muted:#6b665b; --line:#e2d9c6;
+  --green:#0f5c4d; --gold:#b07d1a; --red:#a23b2a; --blue:#2c5d8a;
+  --ml:#0f5c4d; --mg:#b07d1a; --en:#2c5d8a;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#15130f; --card:#1d1a15; --ink:#efe8d8; --muted:#a39b88; --line:#38322a;
+    --green:#4fb59f; --gold:#d9a441; --red:#e07a66; --blue:#7fb0dd;
+    --ml:#4fb59f; --mg:#d9a441; --en:#7fb0dd;}
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.55 system-ui,-apple-system,"Segoe UI","Noto Sans Malayalam","Noto Sans",sans-serif}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px 80px}
+header{padding:28px 0 18px;display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+h1{font:700 28px Georgia,"Noto Serif",serif;margin:0;letter-spacing:.2px}
+header p{margin:0;color:var(--muted)}
+h2{font:700 20px Georgia,serif;margin:28px 0 10px}
+h3{font-size:14px;margin:18px 0 6px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+.drop{border:2px dashed var(--line);border-radius:12px;padding:44px 20px;text-align:center;margin-top:24px;
+  background:var(--card);cursor:pointer;transition:border-color .15s}
+.drop.over,.drop:hover{border-color:var(--green)}
+.drop strong{font:700 18px Georgia,serif}
+.drop small{display:block;color:var(--muted);margin-top:6px}
+button,.btn{font:inherit;border:1px solid var(--green);background:var(--green);color:#fff;border-radius:8px;
+  padding:8px 14px;cursor:pointer}
+button.ghost{background:transparent;color:var(--green)}
+button:disabled{opacity:.45;cursor:not-allowed}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:18px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.stat b{display:block;font:700 24px Georgia,serif}
+.stat span{color:var(--muted);font-size:13px}
+.tabs{display:flex;gap:4px;flex-wrap:wrap;margin:22px 0 0;border-bottom:1px solid var(--line)}
+.tab{background:none;border:none;color:var(--muted);padding:10px 12px;border-bottom:3px solid transparent;border-radius:0}
+.tab[aria-selected=true]{color:var(--ink);border-bottom-color:var(--gold);font-weight:600}
+.warn{border-left:4px solid var(--gold);background:var(--card);padding:10px 14px;margin:10px 0;border-radius:6px}
+.warn.bad{border-left-color:var(--red)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+.pill{display:inline-block;padding:1px 8px;border-radius:99px;font-size:12px;border:1px solid var(--line);margin:1px 2px 1px 0;color:var(--muted)}
+.pill.hot{border-color:var(--red);color:var(--red)}
+.bar{display:flex;height:14px;border-radius:7px;overflow:hidden;background:var(--line)}
+.bar i{display:block;height:100%}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-top:6px}
+.legend em{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:middle;font-style:normal}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}
+.muted{color:var(--muted)} .small{font-size:13px}
+.score{display:inline-block;min-width:26px;text-align:center;border-radius:6px;padding:0 6px;font-weight:700;color:#fff;background:var(--green)}
+.score.s1,.score.s2{background:var(--red)} .score.s3{background:var(--gold)}
+.consent{display:flex;gap:10px;align-items:flex-start;margin:10px 0}
+.progress{height:8px;border-radius:4px;background:var(--line);overflow:hidden;margin:8px 0}
+.progress i{display:block;height:100%;background:var(--green);transition:width .4s}
+ul.tight{margin:4px 0 4px 18px;padding:0}
+.scenebox{max-height:520px;overflow:auto;border:1px solid var(--line);border-radius:10px}
+.hidden{display:none}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+@media print{
+  body{background:#fff;color:#000} .drop,.tabs,.actions,#aiControls,button{display:none!important}
+  .panel{display:block!important;break-inside:avoid} .card,.stat{border-color:#bbb;background:#fff}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>ScriptLens</h1>
+    <p>Screenplay analysis for Malayalam cinema: measured facts first, AI reading second.</p>
+  </header>
+
+  <div id="upload">
+    <label class="drop" id="drop" for="file">
+      <strong>Drop a screenplay here, or click to choose</strong>
+      <small>PDF, DOCX, TXT or Fountain. Malayalam script, Manglish and English can be mixed. Max 15 MB.</small>
+      <input id="file" type="file" accept=".pdf,.docx,.txt,.fountain,.md" class="hidden">
+    </label>
+    <p class="muted small" id="uploadMsg" aria-live="polite"></p>
+    <p class="muted small">Your file is analysed in memory and is not saved to disk. Nothing leaves this server unless you choose AI analysis, which sends the script text to the Anthropic API.</p>
+  </div>
+
+  <div id="results" class="hidden">
+    <div id="warnings"></div>
+    <div class="stats" id="stats"></div>
+    <div class="tabs" role="tablist" id="tabs"></div>
+    <div id="panels"></div>
+    <div class="actions">
+      <button class="ghost" id="printBtn">Print / save as PDF</button>
+      <button class="ghost" id="jsonBtn">Download JSON</button>
+      <button class="ghost" id="newBtn">Analyse another script</button>
+    </div>
+  </div>
+</div>
+
+<script>
+"use strict";
+const $ = (s, r=document) => r.querySelector(s);
+function h(tag, attrs, ...kids){
+  const el = document.createElement(tag);
+  for (const [k,v] of Object.entries(attrs||{})){
+    if (k === "class") el.className = v;
+    else if (k.startsWith("on")) el.addEventListener(k.slice(2), v);
+    else if (v !== false && v != null) el.setAttribute(k, v);
+  }
+  for (const k of kids.flat()){
+    if (k == null || k === false) continue;
+    el.append(k instanceof Node ? k : document.createTextNode(String(k)));
+  }
+  return el;
+}
+const pct = (n) => `${n}%`;
+const FLAG_HOT = new Set(["fight","fire_explosion","crowd","song","stunt"]);
+
+let STATE = {id:null, report:null, config:{ai_enabled:false}, ai:null, poll:null};
+
+/* ---------- upload ---------- */
+const drop = $("#drop"), fileInput = $("#file");
+["dragenter","dragover"].forEach(e => drop.addEventListener(e, ev => {ev.preventDefault(); drop.classList.add("over");}));
+["dragleave","drop"].forEach(e => drop.addEventListener(e, ev => {ev.preventDefault(); drop.classList.remove("over");}));
+drop.addEventListener("drop", ev => { if (ev.dataTransfer.files[0]) upload(ev.dataTransfer.files[0]); });
+fileInput.addEventListener("change", () => { if (fileInput.files[0]) upload(fileInput.files[0]); });
+
+async function upload(file){
+  const msg = $("#uploadMsg");
+  msg.textContent = `Analysing ${file.name}…`;
+  const fd = new FormData(); fd.append("file", file);
+  try{
+    const r = await fetch("/api/analyze", {method:"POST", body:fd});
+    const j = await r.json();
+    if (!r.ok) throw new Error(j.detail || "Upload failed");
+    STATE.id = j.id; STATE.report = j.report; STATE.ai = null;
+    msg.textContent = "";
+    render();
+  }catch(e){ msg.textContent = "Could not analyse this file: " + e.message; }
+}
+
+/* ---------- chart helpers ---------- */
+function stackedBar(parts){ // [{label,value,color}]
+  const total = parts.reduce((a,p)=>a+p.value,0) || 1;
+  const bar = h("div",{class:"bar",role:"img","aria-label":parts.map(p=>`${p.label} ${p.value}`).join(", ")},
+    parts.map(p => h("i",{style:`width:${100*p.value/total}%;background:${p.color}`, title:`${p.label}: ${p.value}`})));
+  const legend = h("div",{class:"legend"}, parts.map(p => h("span",{}, h("em",{style:`background:${p.color}`}), `${p.label} ${p.value}`)));
+  return h("div",{}, bar, legend);
+}
+function pacingChart(bins){
+  const W=640,H=170,pad=26,bw=(W-pad*2)/bins.length;
+  const maxC = Math.max(...bins.map(b=>b.avg_complexity),1);
+  const ns="http://www.w3.org/2000/svg";
+  const svg=document.createElementNS(ns,"svg");
+  svg.setAttribute("viewBox",`0 0 ${W} ${H}`); svg.setAttribute("width","100%"); svg.setAttribute("role","img");
+  svg.setAttribute("aria-label","Talk ratio and production complexity by tenth of the script");
+  const mk=(n,a)=>{const e=document.createElementNS(ns,n);for(const[k,v]of Object.entries(a))e.setAttribute(k,v);return e;};
+  const cs=getComputedStyle(document.body);
+  const line=cs.getPropertyValue("--line"), green=cs.getPropertyValue("--green"), gold=cs.getPropertyValue("--gold"), muted=cs.getPropertyValue("--muted");
+  svg.append(mk("line",{x1:pad,x2:W-pad,y1:H-pad,y2:H-pad,stroke:line}));
+  bins.forEach((b,i)=>{
+    const x=pad+i*bw+4, w=bw-8;
+    const hTalk=(H-pad*2)*b.talk_ratio;
+    svg.append(mk("rect",{x,y:H-pad-hTalk,width:w/2-1,height:hTalk,fill:green,rx:2}));
+    const hC=(H-pad*2)*(b.avg_complexity/maxC);
+    svg.append(mk("rect",{x:x+w/2+1,y:H-pad-hC,width:w/2-1,height:hC,fill:gold,rx:2}));
+    const t=mk("text",{x:x+w/2,y:H-8,"text-anchor":"middle","font-size":"11",fill:muted}); t.textContent=`${i+1}`; svg.append(t);
+  });
+  return h("div",{}, svg, h("div",{class:"legend"},
+    h("span",{},h("em",{style:"background:var(--green)"}),"Dialogue share of words"),
+    h("span",{},h("em",{style:"background:var(--gold)"}),"Avg production complexity (scaled)"),
+    h("span",{},"Horizontal axis: tenths of the script, by word position")));
+}
+
+/* ---------- panels ---------- */
+function overview(r){
+  const lang=r.language.dialogue_words_pct, ie=r.structure.int_ext, tod=r.structure.time_of_day;
+  return h("div",{},
+    r.observations.length ? h("div",{class:"card"}, h("h3",{style:"margin-top:0"},"Things to check"),
+      h("ul",{class:"tight"}, r.observations.map(o=>h("li",{},o)))) : null,
+    h("div",{class:"grid2",style:"margin-top:14px"},
+      h("div",{class:"card"}, h("h3",{style:"margin-top:0"},"Dialogue language (by words)"),
+        stackedBar([{label:"Malayalam script",value:lang.ml,color:"var(--ml)"},{label:"Manglish",value:lang.manglish,color:"var(--mg)"},{label:"English",value:lang.en,color:"var(--en)"}]),
+        h("p",{class:"muted small"},r.language.note)),
+      h("div",{class:"card"}, h("h3",{style:"margin-top:0"},"Scene settings"),
+        stackedBar(Object.entries(ie).map(([k,v],i)=>({label:k,value:v,color:["var(--green)","var(--gold)","var(--blue)","var(--muted)"][i%4]}))),
+        h("div",{style:"height:10px"}),
+        stackedBar(Object.entries(tod).map(([k,v],i)=>({label:k,value:v,color:["var(--blue)","var(--gold)","var(--green)","var(--muted)"][i%4]}))))),
+    h("div",{class:"card",style:"margin-top:14px"}, h("h3",{style:"margin-top:0"},"Most-used locations"),
+      h("table",{},h("tbody",{}, r.structure.top_locations.map(l=>h("tr",{},h("td",{},l.location),h("td",{class:"num"},`${l.scenes} scene${l.scenes>1?"s":""}`)))))));
+}
+function characters(r){
+  const c=r.characters;
+  return h("div",{},
+    h("p",{class:"muted small"},`${c.speaking_count} speaking characters. Top three carry ${Math.round(c.top3_dialogue_share*100)}% of dialogue. Roles are computed from dialogue share only: a silent or action-led protagonist will not show as Lead.`),
+    h("div",{class:"card scenebox"},h("table",{},
+      h("thead",{},h("tr",{},["Character","Role","Dialogue share","Lines","Scenes","First seen","Language (ml / mg / en %)"].map(x=>h("th",{},x)))),
+      h("tbody",{},c.list.map(x=>h("tr",{},
+        h("td",{},x.name),h("td",{},x.role),h("td",{class:"num"},pct(Math.round(x.dialogue_share*100))),
+        h("td",{class:"num"},x.lines),h("td",{class:"num"},x.scenes),
+        h("td",{class:"num"},`sc ${x.first_scene} (${x.first_appearance_pct}%)`),
+        h("td",{},stackedBar([{label:"ml",value:x.lang_pct.ml,color:"var(--ml)"},{label:"mg",value:x.lang_pct.manglish,color:"var(--mg)"},{label:"en",value:x.lang_pct.en,color:"var(--en)"}]).firstChild))
+      )))),
+    c.top_pairs.length ? h("div",{class:"card",style:"margin-top:14px"},h("h3",{style:"margin-top:0"},"Most shared scenes"),
+      h("table",{},h("tbody",{},c.top_pairs.map(p=>h("tr",{},h("td",{},`${p.a} + ${p.b}`),h("td",{class:"num"},`${p.shared_scenes} scene${p.shared_scenes>1?"s":""}`)))))) : null);
+}
+function scenesPanel(r){
+  return h("div",{class:"card scenebox"},h("table",{},
+    h("thead",{},h("tr",{},["#","Heading","Words","Speakers","Flags"].map(x=>h("th",{},x)))),
+    h("tbody",{},r.scenes.map(s=>h("tr",{},
+      h("td",{},s.label),h("td",{},s.heading),h("td",{class:"num"},s.words),h("td",{class:"small"},s.speakers.join(", ")),
+      h("td",{},s.flags.map(f=>h("span",{class:"pill"+(FLAG_HOT.has(f)?" hot":"")},r.production.flag_counts[f]?.label||f))))))));
+}
+function productionPanel(r){
+  const p=r.production;
+  return h("div",{},
+    h("div",{class:"stats"},
+      h("div",{class:"stat"},h("b",{},p.complexity_tier),h("span",{},"Relative complexity (heuristic)")),
+      h("div",{class:"stat"},h("b",{},p.night_exterior_scenes),h("span",{},"Night exterior scenes")),
+      h("div",{class:"stat"},h("b",{},r.structure.unique_locations),h("span",{},"Unique locations"))),
+    h("p",{class:"muted small"},p.note),
+    h("div",{class:"grid2"},
+      h("div",{class:"card"},h("h3",{style:"margin-top:0"},"Scenes by production element"),
+        h("table",{},h("tbody",{},Object.values(p.flag_counts).map(f=>h("tr",{},h("td",{},f.label),h("td",{class:"num"},f.scenes)))))),
+      h("div",{class:"card"},h("h3",{style:"margin-top:0"},"Heaviest scenes"),
+        h("table",{},h("tbody",{},p.heaviest_scenes.map(s=>h("tr",{},h("td",{},`sc ${s.scene}`),h("td",{class:"small"},s.flags.join(", ")||"setting only"),h("td",{class:"num"},s.complexity))))))));
+}
+function pacingPanel(r){
+  const st=r.pacing.talk_heavy_stretches;
+  return h("div",{},h("div",{class:"card"},pacingChart(r.pacing.bins)),
+    h("div",{class:"card",style:"margin-top:14px"},h("h3",{style:"margin-top:0"},"Longest scenes"),
+      h("table",{},h("tbody",{},r.structure.longest_scenes.map(s=>h("tr",{},h("td",{},s.heading),h("td",{class:"num"},`${s.words} words`)))))),
+    st.length? h("div",{class:"card",style:"margin-top:14px"},h("h3",{style:"margin-top:0"},"Talk-heavy stretches"),
+      h("ul",{class:"tight"},st.map(s=>h("li",{},`Scenes ${s.from_scene}-${s.to_scene} (${s.scenes} in a row)`)))):null);
+}
+
+/* ---------- AI panels ---------- */
+const list = (items, fn) => (Array.isArray(items)&&items.length) ? h("ul",{class:"tight"}, items.map(fn)) : h("p",{class:"muted small"},"None reported.");
+const scn = (a) => Array.isArray(a)&&a.length ? h("span",{class:"muted small"},` (sc ${a.join(", ")})`) : null;
+function section(title, ...kids){ return h("div",{class:"card",style:"margin-top:14px"}, h("h3",{style:"margin-top:0"},title), kids); }
+
+function coveragePanel(c){
+  if (!c) return h("p",{class:"muted"},"Run AI analysis to generate producer coverage.");
+  const rat = c.ratings||{};
+  return h("div",{},
+    h("div",{class:"card"},h("h3",{style:"margin-top:0"},"Logline"),h("p",{},c.logline),h("p",{class:"muted small"},c.genre_tone),h("p",{},c.synopsis)),
+    c.recommendation ? section("Recommendation",
+      h("p",{},h("b",{},c.recommendation.verdict)," · confidence: ",c.recommendation.confidence),
+      h("p",{},c.recommendation.rationale),
+      c.recommendation.what_would_change_my_mind? h("p",{class:"muted small"},"What would change this: ",c.recommendation.what_would_change_my_mind):null):null,
+    section("Ratings (1-5)", h("table",{},h("tbody",{},Object.entries(rat).map(([k,v])=>h("tr",{},
+      h("td",{},k.replace(/_/g," ")),
+      h("td",{},h("span",{class:`score s${v?.score||0}`},v?.score??"-")),
+      h("td",{class:"small"},(v?.why||""),scn(v?.scenes))))))),
+    h("div",{class:"grid2"},
+      section("Strengths",list(c.strengths,x=>h("li",{},x.point,scn(x.scenes)))),
+      section("Weaknesses",list(c.weaknesses,x=>h("li",{},x.point,scn(x.scenes))))),
+    section("Production risks",list(c.production_risks,x=>h("li",{},x.risk,scn(x.scenes),x.mitigation?h("div",{class:"muted small"},"Mitigation: "+x.mitigation):null))),
+    section("Marketability hypotheses (to validate, not facts)",list(c.marketability_hypotheses,x=>h("li",{},h("b",{},x.hypothesis),h("div",{class:"small"},x.basis_in_text),h("div",{class:"muted small"},"Validate: "+x.how_to_validate)))),
+    section("Questions for the writer",list(c.questions_for_writer,x=>h("li",{},x))));
+}
+function doctorPanel(d){
+  if (!d) return h("p",{class:"muted"},"Run AI analysis to generate script-doctor notes.");
+  const m=d.malayalam_craft||{}, dl=d.dialogue||{};
+  return h("div",{},
+    section("Rewrite plan (highest impact first)",list(d.rewrite_plan,x=>h("li",{},h("b",{},x.change),scn(x.scenes),h("div",{class:"muted small"},x.why)))),
+    section("Structure map",h("table",{},h("tbody",{},(d.structure_map||[]).map(b=>h("tr",{},h("td",{},b.beat),h("td",{class:"num"},b.scene?`sc ${b.scene}`:"absent"),h("td",{class:"small"},b.assessment)))))),
+    section("Character arcs",list(d.character_arcs,x=>h("li",{},h("b",{},x.name),scn(x.scenes),h("div",{class:"small"},`Wants: ${x.want} | Needs: ${x.need}`),h("div",{class:"small"},x.arc),x.issues?h("div",{class:"muted small"},"Issues: "+x.issues):null))),
+    section("Weakest scenes",list(d.scene_notes,x=>h("li",{},h("b",{},`Scene ${x.scene}: `),x.problem,h("div",{class:"muted small"},"Fix: "+x.fix)))),
+    section("Dialogue",h("p",{},dl.voice_distinctness),list(dl.exposition_problems,x=>h("li",{},`Scene ${x.scene}: ${x.problem}`)),list(dl.strong_moments,x=>h("li",{},`Scene ${x.scene} (works): ${x.why}`))),
+    section("Malayalam craft",
+      h("p",{class:"muted small"},"AI reading of dialect and idiom is a careful second opinion. Have a native-speaking script editor confirm every flag below."),
+      h("ul",{class:"tight"},[["Code-switching",m.code_switching],["Dialect and register",m.dialect_and_register],["Kinship and honorifics",m.kinship_and_honorifics],["Idiom vs translated feel",m.idiom_vs_translated_feel]].map(([k,v])=>v?h("li",{},h("b",{},k+": "),v):null)),
+      list(m.native_review_flags,x=>h("li",{},`Scene ${x.scene}: ${x.concern}`))),
+    d.theme? section("Theme",h("p",{},d.theme)):null);
+}
+function aiControls(){
+  const wrap=h("div",{id:"aiControls",class:"card"});
+  if(!STATE.config.ai_enabled){
+    wrap.append(h("p",{class:"muted"},"AI analysis is off on this server. Set ANTHROPIC_API_KEY and restart to enable producer coverage and script-doctor notes. Everything in the other tabs works without it."));
+    return wrap;
+  }
+  const running = STATE.ai && STATE.ai.status==="running";
+  const cb=h("input",{type:"checkbox",id:"consent"});
+  wrap.append(
+    h("p",{},"AI reads the whole script once, then writes both views. It can take a few minutes on a feature-length script, and Malayalam script uses far more tokens than English, so long scripts cost more."),
+    h("label",{class:"consent"},cb,h("span",{class:"small"},"I understand the script text will be sent to the Anthropic API for analysis, and I have the right to share it.")),
+    h("button",{id:"runAi",disabled:running,onclick:()=>startAi()},running?"Running…":"Run AI analysis"));
+  if(STATE.ai&&STATE.ai.status==="running") wrap.append(h("p",{class:"small"},STATE.ai.message||""),h("div",{class:"progress"},h("i",{style:`width:${Math.round((STATE.ai.progress||0)*100)}%`})));
+  if(STATE.ai&&STATE.ai.status==="error") wrap.append(h("div",{class:"warn bad"},"AI analysis failed: "+STATE.ai.error));
+  return wrap;
+}
+async function startAi(){
+  if(!$("#consent").checked){ alert("Please confirm the consent box first."); return; }
+  const r=await fetch(`/api/ai/${STATE.id}/start`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({lens:"both",consent:true})});
+  const j=await r.json(); if(!r.ok){ STATE.ai={status:"error",error:j.detail}; renderPanels(); return; }
+  STATE.ai={status:"running",message:"Starting",progress:0}; renderPanels(); pollAi();
+}
+function pollAi(){
+  clearInterval(STATE.poll);
+  STATE.poll=setInterval(async()=>{
+    const r=await fetch(`/api/ai/${STATE.id}`); const j=await r.json(); STATE.ai=j;
+    if(j.status!=="running"){ clearInterval(STATE.poll); }
+    renderPanels();
+  },2500);
+}
+
+/* ---------- shell ---------- */
+const TABS=[["overview","Overview"],["characters","Characters"],["scenes","Scenes"],["production","Production"],["pacing","Pacing"],["coverage","Producer coverage (AI)"],["doctor","Script doctor (AI)"]];
+let current="overview";
+function render(){
+  const r=STATE.report;
+  $("#upload").classList.add("hidden"); $("#results").classList.remove("hidden");
+  $("#warnings").replaceChildren(...r.warnings.map(w=>h("div",{class:"warn bad"},w)));
+  const m=r.meta;
+  $("#stats").replaceChildren(
+    ...[[m.filename||"Script","File"],[m.pages??`~${m.pages_estimated}`,m.pages?"Pages":"Pages (estimated)"],[r.structure.scene_count,"Scenes"],
+    [r.characters.speaking_count,"Speaking characters"],[r.structure.unique_locations,"Locations"],[`${Math.round(m.dialogue_share*100)}%`,"Dialogue share of words"],
+    [`~${m.est_runtime_minutes} min`,"Rough runtime"]].map(([b,s])=>h("div",{class:"stat"},h("b",{style:b&&String(b).length>14?"font-size:15px":""},b),h("span",{},s))));
+  $("#tabs").replaceChildren(...TABS.map(([id,label])=>h("button",{class:"tab",role:"tab","aria-selected":id===current,onclick:()=>{current=id;render();renderPanels();}},label)));
+  renderPanels();
+}
+function renderPanels(){
+  const r=STATE.report; if(!r) return;
+  $("#tabs").querySelectorAll(".tab").forEach((t,i)=>t.setAttribute("aria-selected",TABS[i][0]===current));
+  const res=STATE.ai&&STATE.ai.status==="done"?STATE.ai.result:null;
+  const p=h("div",{class:"panel",role:"tabpanel"});
+  const body={overview:()=>overview(r),characters:()=>characters(r),scenes:()=>scenesPanel(r),production:()=>productionPanel(r),pacing:()=>pacingPanel(r),
+    coverage:()=>h("div",{},aiControls(),coveragePanel(res&&res.coverage)),doctor:()=>h("div",{},aiControls(),doctorPanel(res&&res.doctor))}[current]();
+  p.append(h("div",{style:"margin-top:16px"},body));
+  $("#panels").replaceChildren(p);
+}
+$("#printBtn").onclick=()=>window.print();
+$("#jsonBtn").onclick=()=>{
+  const blob=new Blob([JSON.stringify({report:STATE.report,ai:STATE.ai&&STATE.ai.result||null},null,2)],{type:"application/json"});
+  const a=h("a",{href:URL.createObjectURL(blob),download:(STATE.report.meta.filename||"script")+".scriptlens.json"}); a.click();
+};
+$("#newBtn").onclick=()=>{ clearInterval(STATE.poll); STATE={id:null,report:null,config:STATE.config,ai:null,poll:null}; current="overview";
+  $("#results").classList.add("hidden"); $("#upload").classList.remove("hidden"); fileInput.value=""; };
+fetch("/api/config").then(r=>r.json()).then(c=>STATE.config=c).catch(()=>{});
+</script>
+</body>
+</html>

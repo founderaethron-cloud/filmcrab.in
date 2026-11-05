@@ -1,0 +1,14 @@
+# secrets
+.env
+*.key
+# real screenplays and outputs must never be committed
+uploads/
+scripts_private/
+*.scriptlens.json
+samples/*
+!samples/sample_mixed.txt
+# python
+__pycache__/
+.pytest_cache/
+*.pyc
+.venv/
